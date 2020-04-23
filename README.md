@@ -64,6 +64,10 @@ app.use(express.static('webapp'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 ```
 
+
+
+
+
 위의 두 설정을 마치면, 서버를 실행하시면 됩니다. 터미널에서 node index.js 명령어를 실행시켜보세요. 정상적으로 서버가 실행되면, 아래와 같이, 3000번 포트로 서버가 실행되었다는 로그를 볼 수 있습니다.
 
  **STEP 02. index.html 설정**
@@ -113,5 +117,42 @@ Step 01에서 간단하게 프론트엔드 서버를 띄우는 방법을 저희�
 </html>
 ```
 
+**UI5 라이브러리 로드**
 
+UI5 라이브리러를 로드하는 방법은 CDN방식이 있고, 로컬 경로에서 가져오는 방식이 있습니다. CDN 방식의 장점은 오픈된 링크를 통해서 가져오기 편하다는 장점이 있습니다. 반면 단점으론 로컬 경로에 있는 것보다 다운로드 받는 데 많은 시간이 걸리기 쉽고, 이에따라 화면에 로딩도 느려지는 단점이 있습니다. 저는 CDN방식을 이용하여 UI5 라이브러리를 불러왔습니다. 
+
+```markup
+src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+```
+
+```markup
+ <script id = "sap-ui-bootstrap"
+            src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-theme="sap_belize"
+            data-sap-ui-libs="sap.m"
+            id="sap.ui-bootstrap"
+            data-sap-ui-resourceroots='{"view" : "./"}'
+            data-sap-ui-xx-bindingsyntax="complex"
+            >
+```
+
+**UI5 테마**
+
+UI5는 여러 테마를 제공합니다. 아래는 belize 테마를 설정한 것으로, 테마에 관련 해선 추후에 설명을 드리겠습니다.
+
+```markup
+data-sap-ui-theme="sap_belize"
+```
+
+**UI5 라이브러리 설정** 
+
+**UI5 루트 리소스 설정**
+
+**UI5 Odata 매핑 설정**
+
+UI5는 Odata 방식을 이용하여 데이터를 제어합니다. 아래의 설정은 Odata를 화면에 자동으로 매핑할 수 있도록 하는 설정으로, 비슷한 설정으론 `data-sap-ui-compatversion="edge"` 을 들 수 있습니다.
+
+```markup
+data-sap-ui-xx-bindingsyntax="complex"
+```
 
