@@ -35,9 +35,34 @@ Open-UI5는 웹 UI 프레임워크이기 때문에, 프론트엔드 서버를 �
 
 index.js에는 로컬서버를 실행할때, 3000번 포트로 접근하면 index.html로 접근하도록 코드를 작성했습니다. package.json에는 백엔드 서버에 필요한 express 라이브러리를 추가했습니다.
 
+```javascript
+{
+  "name": "ui5 project",
+  "version": "1.0.0",
+  "dependencies": {
+     "express" : "latest"
+     "@openui5/sap.m" : "^1",
+     "@openui5/sap.ui.core" : "^1",
+     "@openui5/themelib_sap_belize" : "^1"
+  }
+}
+```
+
 ![package.json &#xC124;&#xC815;](.gitbook/assets/img_b2d82c716696-1.jpeg)
 
 ![index.js &#xC124;&#xC815;](.gitbook/assets/img_75cd9be441bb-1.jpeg)
+
+```javascript
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.set('views', __dirname + '/views');
+
+app.use(express.static('webapp'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+```
 
 위의 두 설정을 마치면, 서버를 실행하시면 됩니다. 터미널에서 node index.js 명령어를 실행시켜보세요. 정상적으로 서버가 실행되면, 아래와 같이, 3000번 포트로 서버가 실행되었다는 로그를 볼 수 있습니다.
 
