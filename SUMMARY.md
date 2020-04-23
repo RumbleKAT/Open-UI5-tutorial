@@ -1,4 +1,4 @@
 # Table of contents
 
-* [Initial page](README.md)
+* [Tutorial 01. Hello world](README.md)
 
