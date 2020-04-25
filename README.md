@@ -48,10 +48,6 @@ index.js에는 로컬서버를 실행할때, 3000번 포트로 접근하면 inde
 }
 ```
 
-![package.json &#xC124;&#xC815;](.gitbook/assets/img_b2d82c716696-1.jpeg)
-
-![index.js &#xC124;&#xC815;](.gitbook/assets/img_75cd9be441bb-1.jpeg)
-
 ```javascript
 const express = require('express')
 const app = express()
@@ -63,8 +59,6 @@ app.use(express.static('webapp'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 ```
-
-
 
 
 
@@ -82,8 +76,7 @@ Step 01에서 간단하게 프론트엔드 서버를 띄우는 방법을 저희�
 
 반면, index.html에서는  UI5 라이브러리 로드, XML View의 DIV 매핑, 작업을 진행했습니다.
 
-![](.gitbook/assets/img_c4be0f8ddf6b-1%20%281%29.jpeg)
-
+{% code title="" %}
 ```markup
 <!DOCTYPE html>
 <html>
@@ -116,6 +109,7 @@ Step 01에서 간단하게 프론트엔드 서버를 띄우는 방법을 저희�
 </body>
 </html>
 ```
+{% endcode %}
 
 **UI5 라이브러리 로드**
 
@@ -146,7 +140,19 @@ data-sap-ui-theme="sap_belize"
 
 **UI5 라이브러리 설정** 
 
+아래 구문은 UI5에서 모든 장치\(모바일, 태블릿, PC\)에 반응하는 사용자 인터페이스를 구축하기 위한 가장 중요한 컨트롤을 불러오는 코드입니다.
+
+```markup
+data-sap-ui-libs="sap.m"
+```
+
 **UI5 루트 리소스 설정**
+
+UI5에선 루트 리소스를 설정함으로써, index.html에서 보여줄 Model, View, Controller 리소스를 가져올 수 있습니다. 저는 간단한게 View 디렉토리를 루트 리소스로 설정하였습니다.
+
+```markup
+data-sap-ui-resourceroots='{"view" : "./"}'
+```
 
 **UI5 Odata 매핑 설정**
 
