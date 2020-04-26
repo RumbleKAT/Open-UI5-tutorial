@@ -76,7 +76,6 @@ Step 01에서 간단하게 프론트엔드 서버를 띄우는 방법을 저희�
 
 반면, index.html에서는  UI5 라이브러리 로드, XML View의 DIV 매핑, 작업을 진행했습니다.
 
-{% code title="" %}
 ```markup
 <!DOCTYPE html>
 <html>
@@ -109,7 +108,6 @@ Step 01에서 간단하게 프론트엔드 서버를 띄우는 방법을 저희�
 </body>
 </html>
 ```
-{% endcode %}
 
 **UI5 라이브러리 로드**
 
@@ -163,4 +161,51 @@ data-sap-ui-xx-bindingsyntax="complex"
 ```
 
 ### **View 디렉토리 구성**
+
+\*\*\*\*
+
+```markup
+<core:View xmlns:core="sap.ui.core"
+           xmlns:mvc="sap.ui.core.mvc"
+           xmlns="sap.m"
+           controllerName="view.main">
+
+    <HBox alignItems="Center" width="auto" class="sapUiResponsiveMargin">
+        <Label text="버튼 클릭"/>
+        <Button id="btn1" type="Emphasized" icon="sap-icon://accept" press="onClicked" class="sapUiSmallMargin"/>    
+    </HBox>  
+    
+</core:View>
+```
+
+```javascript
+/*
+sap.ui.controller("view.main", {
+  onInit : function(){
+    console.log("!!");
+  },
+  onClicked : function(){
+    alert("accept btn clicked!");
+  }
+});
+*/
+
+sap.ui.define([
+  "sap/ui/core/mvc/Controller",
+    
+],function(Controller){
+    "use strict"
+    return Controller.extend("view.main",{
+      onInit : function(){
+        console.log("!!");
+      },
+      onClicked : function(){
+        alert("accept btn clicked!");
+      }
+    });
+});
+
+```
+
+
 
