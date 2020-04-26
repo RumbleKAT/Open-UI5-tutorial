@@ -160,10 +160,30 @@ UI5는 Odata 방식을 이용하여 데이터를 제어합니다. 아래의 설�
 data-sap-ui-xx-bindingsyntax="complex"
 ```
 
+#### UI5 DOM 매핑 설정
+
+UI5는 XML, JS, HTML 템플릿 등의 형식으로 작성된 view 코드를 index.html 파일에 DOM 매핑을 하여 DOM 트리를 그리게 됩니다.  이 과정에서 저희가 content id를 가진 DOM 객체에 UI5 DOM element를 추가하게 됩니다. 그리하여 UI5로 만들어지지 않은 legacy html 코드에서도 어떤 부분을 UI5로 표현할 지, 개발자가 선택적으로 DOM 매핑을 진행할 수 있습니다.
+
+```javascript
+ var page = sap.ui.view({
+        id : "idMain",
+        viewName : "view.main",
+        type: sap.ui.core.mvc.ViewType.XML
+     }).placeAt("content");
+```
+
 ### **View 디렉토리 구성**
 
-\*\*\*\*
+View 디렉토리는 다음 두 파일로 구성이 되어 있습니다. main.view.xml은 화면을 표현하는 View 단의 코드가 작성되어있고, main.controller.js는 main.view.xml에서 작성한 코드를 제어하는 코드를 작성합니다.
 
+```javascript
+View
+ |
+ |---------- main.view.xml
+ |---------- main.controller.js
+```
+
+{% code title="main.view.xml" %}
 ```markup
 <core:View xmlns:core="sap.ui.core"
            xmlns:mvc="sap.ui.core.mvc"
@@ -177,19 +197,10 @@ data-sap-ui-xx-bindingsyntax="complex"
     
 </core:View>
 ```
+{% endcode %}
 
+{% code title="main.controller.js" %}
 ```javascript
-/*
-sap.ui.controller("view.main", {
-  onInit : function(){
-    console.log("!!");
-  },
-  onClicked : function(){
-    alert("accept btn clicked!");
-  }
-});
-*/
-
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
     
@@ -206,6 +217,15 @@ sap.ui.define([
 });
 
 ```
+{% endcode %}
 
+위의 예제 코드를 실행하면, 버튼을 누를 때, UI5의 버튼 control에서 제공하는 press라는 이벤트가 실행되면서 alert\("accept btn clicked"\)가 실행되는 것을 보실 수 있습니다.
 
+### 예제 실행 이미지
+
+![&#xCCB4;&#xD06C; &#xBC84;&#xD2BC;&#xC744; &#xD074;&#xB9AD;&#xD558;&#xAE30; &#xC804;](.gitbook/assets/img_0025.jpg)
+
+![&#xCCB4;&#xD06C; &#xBC84;&#xD2BC;&#xC744; &#xD074;&#xB9AD;&#xD55C; &#xD6C4;](.gitbook/assets/img_0026-2.jpg)
+
+### 
 
