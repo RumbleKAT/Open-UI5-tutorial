@@ -66,5 +66,71 @@ onBeforeRendering 함수는 뷰가 로드하기전에 개발자가 실행하고�
 
 &lt;index.html&gt;
 
+```markup
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenUI5 Hello world App</title>
+   <script id = "sap-ui-bootstrap"
+            src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-theme="sap_belize"
+            data-sap-ui-libs="sap.m"
+            id="sap.ui-bootstrap"
+            data-sap-ui-resourceroots='{"view" : "./"}'
+            data-sap-ui-xx-bindingsyntax="complex"
+            >
+  </script>
+ <script>
+   sap.ui.localResources("view");
+   
+    sap.ui.getCore().attachInit(function(){
+      
+        var page = new sap.ui.view({
+        id : "idMain",
+        viewName : "view.main",
+        type: sap.ui.core.mvc.ViewType.XML
+       }).placeAt("content");
+    
+    });
+     </script>
+ 
+  </head>
+<body class="sapUiBody">
+  <h1>Header</h1>
+  <div id="content"></div>  
+</body>
+</html>
+```
+
+&lt;main.controller.js&gt;
+
+```javascript
+sap.ui.define([
+  "sap/ui/core/mvc/Controller",
+    
+],function(Controller){
+    "use strict"
+    return Controller.extend("view.main",{
+      onInit : function(){
+        alert("Init View")
+      },
+      onBeforeRendering : function(){
+        alert("onBeforeRendering...")
+      },
+      onAfterRendering : function(){
+        alert("onAfterRendering...")
+      },
+      onExit : function(){
+        alert("exit!")
+      },
+      
+      onClicked : function(Event){
+        this.getView().destroy();
+      }
+    });
+});
+
+```
+
 
 
