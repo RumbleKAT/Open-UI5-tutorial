@@ -15,5 +15,7 @@ description: UI5에서 제공하는 View 단의 개발을 해보자
 * HTML View
 * JSON View
 
+이중 JS View와 XML View는 광범휘하게 사용되고 있고, SAP에서 제공하는 Hybrid 앱 플랫폼인 Fiori에선 XML View가 대부분 사용되고 있습니다. 추가로 개발자가 Custom View를 만들 수 있는데, 이는 sap.ui.core.mvc.View 라이브러리를 상속하면 가능합니다.
+
 
 
