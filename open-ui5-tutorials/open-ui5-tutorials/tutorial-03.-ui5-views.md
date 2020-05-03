@@ -17,5 +17,87 @@ description: UI5에서 제공하는 View 단의 개발을 해보자
 
 이중 JS View와 XML View는 광범휘하게 사용되고 있고, SAP에서 제공하는 Hybrid 앱 플랫폼인 Fiori에선 XML View가 대부분 사용되고 있습니다. 추가로 개발자가 Custom View를 만들 수 있는데, 이는 sap.ui.core.mvc.View 라이브러리를 상속하면 가능합니다.
 
+### JS View Example
 
+#### Main.controller.js
+
+```javascript
+sap.ui.define([
+  "sap/ui/core/mvc/Controller",    
+],function(Controller){
+    "use strict"
+    return Controller.extend("view.Main",{
+      onClicked : function(Event){
+        alert("Click Me button Clicked!");
+      }
+    });
+});
+```
+
+####  Main.view.js
+
+```javascript
+sap.ui.jsview("view.Main",{
+ getControllerName : function(){
+    return "view.Main"
+ },
+ createContent : function(oController){
+   
+   alert(oController.onClicked);
+   var oButton = new sap.m.Button(
+     this.createId("helloButton"),{
+       text : "Click Me"
+     });
+     
+   oButton.attachPress(oController.onClicked);
+ 
+ var oPage = new sap.m.VBox({
+   });
+   
+   oPage.addItem(oButton);
+   
+   return oPage;
+ }
+});  
+```
+
+#### Index.html
+
+```markup
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenUI5 Hello world App</title>
+    <script id = "sap-ui-bootstrap"
+            src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-theme="sap_belize"
+            data-sap-ui-libs="sap.m"
+            id="sap.ui-bootstrap"
+            data-sap-ui-resourceroots='{"view" : "./"}'
+            data-sap-ui-xx-bindingsyntax="complex"
+            >
+     </script>
+     <script>
+     sap.ui.localResources("view");
+ 
+     var app = new sap.m.App({ initialPage : "idMain"});
+     
+     var view = sap.ui.view({
+        id : "idMain",
+        viewName : "view.Main",
+        type: sap.ui.core.mvc.ViewType.JS
+     });
+     
+     app.addPage(view);
+     app.placeAt("content");
+     
+     </script>
+  
+  </head>
+<body class="sapUiBody" role="application">
+  <h1>Header</h1>
+  <div id="content"></div>
+</body>
+</html>
+```
 
