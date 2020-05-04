@@ -98,6 +98,20 @@ sap.ui.jsview("view.Main",{
   <h1>Header</h1>
   <div id="content"></div>
 </body>
-</html>
+```
+
+### XML View Example
+
+#### Main.view.xml
+
+```markup
+<mvc:View 
+    controllerName="view.Main"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox>
+      <Button text="Click Me" press="onClicked"/>
+    </VBox>
+</mvc:View>
 ```
 
