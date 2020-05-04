@@ -112,12 +112,52 @@ sap.ui.jsview("view.Main",{
     <VBox>
       <Button text="Click Me" press="onClicked"/>
     </VBox>
+</mvc:View>
+```
 
+#### Index.html
+
+```markup
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenUI5 Hello world App</title>
+  <script id = "sap-ui-bootstrap"
+          src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+          data-sap-ui-theme="sap_belize"
+          data-sap-ui-libs="sap.m"
+          id="sap.ui-bootstrap"
+          data-sap-ui-resourceroots='{"view" : "./"}'
+          data-sap-ui-xx-bindingsyntax="complex"
+          >
+   </script>
+   <script>
+   sap.ui.localResources("view");
+ 
+   var app = new sap.m.App({ initialPage : "idMain"});
+   
+   var view = sap.ui.view({
+      id : "idMain",
+      viewName : "view.Main",
+      type: sap.ui.core.mvc.ViewType.XML
+   });
+   
+   app.addPage(view);
+   app.placeAt("content");
+   
+   </script>
+
+</head>
+<body class="sapUiBody" role="application">
+<h1>Header</h1>
+<div id="content"></div>
+</body>
+</html>
 ```
 
 ## Result 
 
-![XML View&#xC640; JS View&#xC758; &#xB80C;&#xB354;&#xB9C1; &#xD654;&#xBA74;&#xC740; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/openui5-hello-world-app.png)
+![XML View&#xC640; JS View&#xC758; &#xB80C;&#xB354;&#xB9C1; &#xD654;&#xBA74;&#xC740; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/openui5-hello-world-app%20%281%29.png)
 
-
+![](../../.gitbook/assets/openui5-hello-world-app.png)
 
