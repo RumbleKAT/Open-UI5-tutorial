@@ -162,5 +162,51 @@ UI5에서 외부 모듈을 가져오는 방법은 sap.ui.define에 앞서 제작
 
 ![&#xC22B;&#xC790;&#xAC00; &#xC544;&#xB2CC; &#xB2E4;&#xB978; &#xD615;&#xC2DD;&#xC744; &#xC785;&#xB825;&#xD588;&#xC744; &#xACBD;&#xC6B0; &#xC5D0;&#xB7EC; &#xB9AC;&#xD134;](../../.gitbook/assets/afield.jpeg)
 
-## Sap.ui.define과 sap.ui.require의 차이점
+## sap.ui.define과 sap.ui.require의 차이점
+
+본 글은 이 [링크](https://dingyj.gitbook.io/blog/sap/untitled/sapui5-sap.ui.define-and-sap.ui.require)를 참고했습니다. UI5에서 module을 로드하는 방법으로 2가지 방법이 있습니다. sap.ui.define은 Global namespace 모듈로 정의하고 의존적인 모듈을 가져옵니다. 반면, sap.ui.require는 namespace선언 없이 의존적인 모듈을가져옵니다. 
+
+저희가 sap.ui.define을 통해 view controller를 만들면, 내부적으로는 sap.ui.require를 이용하여 view controller를 로드하고, 이를 view단으로 적용되는 프로세스가 진행됩니다.
+
+앞서 제작했던 Calculator.js를 require를 사용한다면 이렇게 바꿀 수 있습니다.
+
+{% code title="Main.controller.js" %}
+```javascript
+sap.ui.define([
+  "sap/ui/core/mvc/Controller"
+],function(Controller){
+    "use strict"
+    return Controller.extend("view.Main",{     
+      onAfterRendering : function(){
+         var btn = this.getView().byId("btn2");
+         btn.addStyleClass('btnStyleBlue');
+      },
+      onSum : function(){
+        var aFieldValue = sap.ui.getCore().byId(this.createId("AFieldInput")).getValue();
+        var bFieldValue = sap.ui.getCore().byId(this.createId("BFieldInput")).getValue();                        
+        
+        var reg = new RegExp('^[0-9]+$');
+        
+        if(!reg.test(aFieldValue) || !reg.test(bFieldValue)){
+          alert("Please write the number");
+          return;
+        }
+        
+        aFieldValue = parseInt(aFieldValue);
+        bFieldValue = parseInt(bFieldValue);
+       
+        sap.ui.require(["view/Calculator"], function(Calculator){
+            alert(Calculator.onSum(aFieldValue,bFieldValue)); 
+        });
+        
+      }
+    });
+});
+
+```
+{% endcode %}
+
+ㅇ아앞
+
+
 
