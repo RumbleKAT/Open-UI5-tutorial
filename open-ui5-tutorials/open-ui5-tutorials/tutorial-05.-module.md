@@ -97,7 +97,70 @@ webApp/
 
 UI5는 SimpleForm이라는 간단한 폼 형식의 UI element를 제공합니다. 이는 Form에 사용되는 여러 UI element들을 화면 크기에 맞춰서 정렬해주는 역할을 합니다.
 
+{% code title="Calculator.js" %}
+```javascript
+sap.ui.define([],function(){
+   "use strict"
+    return {
+      onSum : function(a,b){
+        return a+b;
+      },
+      onSub : function(a,b){
+        return a-b;
+      },
+      onMultiply : function(a,b){
+        return a*b;
+      },
+      onDivide : function(a,b){
+        return a/b;
+      }
+    } 
+  });
+```
+{% endcode %}
 
+{% code title="Main.controller.js" %}
+```javascript
+sap.ui.define([
+  "sap/ui/core/mvc/Controller",
+  "view/Calculator"    
+],function(Controller,Calculator){
+    "use strict"
+    return Controller.extend("view.Main",{     
+      onAfterRendering : function(){
+         var btn1 = this.getView().byId("btn2");
+         btn1.addStyleClass('btnStyleBlue');
+      },
+      onSum : function(){
+        var aFieldValue = sap.ui.getCore().byId(this.createId("AFieldInput")).getValue();
+        var bFieldValue = sap.ui.getCore().byId(this.createId("BFieldInput")).getValue();                        
+        
+        var reg = new RegExp('^[0-9]+$');
+        
+        if(!reg.test(aFieldValue) || !reg.test(bFieldValue)){
+          alert("Please write the number");
+          return;
+        }
+        
+        aFieldValue = parseInt(aFieldValue);
+        bFieldValue = parseInt(bFieldValue);
+        
+        
+        alert(Calculator.onSum(aFieldValue,bFieldValue));
+      }
+    });
+});
+
+```
+{% endcode %}
+
+UI5에서 외부 모듈을 가져오는 방법은 sap.ui.define에 앞서 제작한 라이브러리의 경로를 작성하고, 해당 라이브러리를 정의해 주어야합니다. **“function\(Controller, Calculator\)”** 가 바로 그 예시입니다.  이 방법을 통해 저희는 더 작은 기능 단위로 함수를 더 나눌수 있습니다.
+
+### Step 03. 결과화면
+
+
+
+ㅇ예옛
 
 ## Sap.ui.define과 sap.ui.require의 차이점
 
