@@ -39,5 +39,65 @@ sap.ui.define([
 
 ## 간단한 계산기 만들기
 
+지금부터 간단한 모듈을 만드는 작업을 진행할 것입니다. 바로 사칙연산을 제공하는 계산기 모듈입니다. Controller.js에서 같은 root resource 안에 있는 계산기 모듈에 접근하여 사칙연산 결과값을 alert로 뿌려주는 작업을 진행할 것입니다.
+
+### Step 1. 디렉토리 구성
+
+```javascript
+webApp/
+   ㄴ Main.controller.js
+   ㄴ Calculator.js
+   ㄴ Main.view.xml
+```
+
+디렉토리 구성은 다음과 같습니다. 화면단을 제어하는 Main.controller.js 파일 외에 Calculator.js 파일을 만듭니다. Calculator.js는 더하기, 빼기, 곱하기, 나누기의 4가지 기능을 제공합니다. main.view.xml에서는 2개의 text input field를 추가하여 사용자의 입력을 받고, Sum 버튼을 클릭하면 2개의 text input field에서 받은 값을 Number 형태로 변환하여 사칙연산을 진행할 예정입니다.
+
+### Step 2. 소스 구성
+
+{% code title="Main.view.xml" %}
+```markup
+<mvc:View 
+    controllerName="view.Main"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc">
+    
+    <html:style>
+      .btnStyleBlue .sapMBtnInner{
+         border-radius:30px;
+         background-color: #008CBA; /* Blue */
+         border: none;
+         color: white;
+         width : 150px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+      }
+      .hBoxStyle{
+        text-align: center;
+      }
+    </html:style>
+   
+   <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+      <f:content>
+           <Label text="AField" labelFor="AFieldInput"/>
+           <Input type="Text" id="AFieldInput"/>
+           <Label text="BField" labelFor="BFieldInput"/>
+           <Input type="Text" id="BFieldInput"/>           
+      </f:content>
+    </f:SimpleForm>
+    <VBox class="hBoxStyle">
+      <Button id="btn2" class="btnStyleGreen" text="Sum" press="onSum" />
+     </VBox>
+</mvc:View>
+```
+{% endcode %}
+
+UI5는 SimpleForm이라는 간단한 폼 형식의 UI element를 제공합니다. 이는 Form에 사용되는 여러 UI element들을 화면 크기에 맞춰서 정렬해주는 역할을 합니다.
+
+
+
 ## Sap.ui.define과 sap.ui.require의 차이점
 
