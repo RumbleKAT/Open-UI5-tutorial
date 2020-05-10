@@ -156,11 +156,11 @@ sap.ui.define([
 
 UI5에서 외부 모듈을 가져오는 방법은 sap.ui.define에 앞서 제작한 라이브러리의 경로를 작성하고, 해당 라이브러리를 정의해 주어야합니다. **“function\(Controller, Calculator\)”** 가 바로 그 예시입니다.  이 방법을 통해 저희는 더 작은 기능 단위로 함수를 더 나눌수 있습니다.
 
-### Step 03. 결과화면
+### Step 3. 결과화면
 
+![A,B &#xD544;&#xB4DC; &#xAC12;&#xC758; &#xD569;&#xC774; alert &#xB418;&#xB294; &#xAC83;&#xC744; &#xBCFC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/afield%20%282%29.jpeg)
 
-
-ㅇ예옛
+![&#xC22B;&#xC790;&#xAC00; &#xC544;&#xB2CC; &#xB2E4;&#xB978; &#xD615;&#xC2DD;&#xC744; &#xC785;&#xB825;&#xD588;&#xC744; &#xACBD;&#xC6B0; &#xC5D0;&#xB7EC; &#xB9AC;&#xD134;](../../.gitbook/assets/afield.jpeg)
 
 ## Sap.ui.define과 sap.ui.require의 차이점
 
