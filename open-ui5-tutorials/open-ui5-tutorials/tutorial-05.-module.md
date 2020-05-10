@@ -37,3 +37,7 @@ sap.ui.define([
 
 ```
 
+
+
+## Sap.ui.define과 sap.ui.require의 차이점
+
