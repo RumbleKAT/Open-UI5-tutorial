@@ -959,5 +959,22 @@ Odata Entityset은 키값을 가지고 있습니다. 저희는 이 키값을 통
 
 위의 링크를 호출하시면, Customers 엔티티 그룹의 키값\('ALFKI'\)에 해당하는 값을 호출합니다.
 
+```javascript
+{
+    "odata.metadata": "https://services.odata.org/Northwind/Northwind.svc/$metadata#Customers/@Element",
+    "CustomerID": "ALFKI",
+    "CompanyName": "Alfreds Futterkiste",
+    "ContactName": "Maria Anders",
+    "ContactTitle": "Sales Representative",
+    "Address": "Obere Str. 57",
+    "City": "Berlin",
+    "Region": null,
+    "PostalCode": "12209",
+    "Country": "Germany",
+    "Phone": "030-0074321",
+    "Fax": "030-0076545"
+}
+```
+
 
 
