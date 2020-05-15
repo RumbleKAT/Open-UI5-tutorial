@@ -955,3 +955,9 @@ Odata는 XML 뿐만 아니라 JSON 포맷도 제공합니다.
 
 Odata Entityset은 키값을 가지고 있습니다. 저희는 이 키값을 통해 원하는 데이터를 효과적으로 추출할 수 있습니다. 
 
+[`https://services.odata.org/Northwind/Northwind.svc/Customers('ALFKI')?$format=json`](https://services.odata.org/Northwind/Northwind.svc/Customers%28'ALFKI'%29?$format=json)\`\`
+
+위의 링크를 호출하시면, Customers 엔티티 그룹의 키값\('ALFKI'\)에 해당하는 값을 호출합니다.
+
+
+
