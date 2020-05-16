@@ -30,12 +30,33 @@ sap.ui.getCore().attachInit(function(){
 
 ### XMLModel
 
+아래 예시는 XMLModel을 사용해서 Model을 선언하는 예시입니다.
+
 ```javascript
 var testdata = "<?xml version=\"1.0\"?><some><xml>data</xml></some>";
 var oModel = new sap.ui.model.xml.XMLModel();
 oModel.setXML(testdata);
 sap.ui.getCore().setModel(oModel);
 ```
+
+## 활용예시-UI5 Tabel List 
+
+본격적으로 UI5 Model을 사용하기 위해서 Table에 해당 내용을 보여주는 예시를 들어보겠습니다. 이번 예시를 위해서 odata.org에서 제공하는 TripPinServiceRW 엔티티를 활용하겠습니다. 이는 odata.org에서 실제 odata를 사용할 때, CRUD \(create, read, update, delete\) 기능을 활용할 수 있게 제공하는 샘플입니다. TripPinServiceRW 엔티티 샘플의 리스트를 받아서 테이블에 그려주는 예시를 구현하는 것이 이번 튜토리얼의 목표입니다.
+
+### 디렉토리 구성
+
+```javascript
+directory
+    Webapp
+      |----- Views
+      |        |------ main.controller.js
+      |        |------ main.view.xml
+      |
+      |------ index.html
+      
+```
+
+디렉토리 구성은 다음과 같습니다. 이전 튜토리얼에서 보셨던 예제와 비슷하게 구성하시면 됩니다. main.controller.js에서는 특정 링크에 리퀘스트를 호출하고, 리턴된 값을 화면에 사용할 수 있는 모델 데이터로 변환할 것입니다. main.view.xml에서는 UI5에서 제공하는 table 태그를 활용하여 테이블 형태에 맞춰서 화면을 구성하는 코드를 작성할 것입니다.
 
 
 
