@@ -10,7 +10,7 @@ description: Open-UI5를 이용하여 센스넘치는 Web Page 만들기
 4. [Using HTML native Tag & Custom CSS](open-ui5-tutorials/open-ui5-tutorials/tutorial-04.-using-html-native-tag.md)
 5. [Module](open-ui5-tutorials/open-ui5-tutorials/tutorial-05.-module.md)
 6. [UI5 Model](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-ui5-model.md)
-7. UI Element
+7. [UI Element](open-ui5-tutorials/open-ui5-tutorials/tutorial-07.-ui-elements.md)
 8. Routing
 9. [Using Odata](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-using-odata.md)
 
