@@ -51,9 +51,11 @@ Label은 SimpleForm 같은 폼에서 Input 태그를 설명하는 역할로 많�
 
 sId만 작성을 하면, 화면 상에는 아무것도 표시 되는 것이 없습니다. UI5에서는 mSetting 속성을 통해서 해당 UI Element 고유의 속성들을 제공합니다.  Label 태그의 경우에는 Label 태그의 글을 보여주는 text property나 꼭 작성해야되는 Label 필드를 표시하기 위한 required 필드 등 여러가지 사용 목적에 따라서 property의 값을 넣어주면 됩니다.
 
-#### Example 
+#### Example - xmlView로 Label 선언하기
 
 `<Label text="sample" required="true"/>`
 
 ![Label tag example](../../.gitbook/assets/image%20%281%29.png)
+
+
 
