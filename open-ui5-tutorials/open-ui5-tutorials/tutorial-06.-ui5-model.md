@@ -90,6 +90,8 @@ sap.ui.define([
 
 UI5는 데이터를 관리하기 위해 여러 상태 함수를 제공합니다. 위의 코드를 보시면, 브라우저에 View.xml 파일이 업데이트가 되기 전인 onAfterRendering 함수에 TripPinServiceRW 엔티티를 호출합니다. 호출된 데이터는 json 형태로 리턴되지만\(=param.value\), 아직 이 상태로 setModel을 하시면, 브라우저에 원하는 데이터가 매핑이 안되는 문제점이 있습니다. 이를 해결하기 위해 JSONModel로 해당 JSON 배열을 감싸주면, 저희는 원할하게 Model의 데이터를 View단에 보여줄 수 있습니다.
 
+![request&#xAC00; &#xC815;&#xC0C1;&#xC801;&#xC73C;&#xB85C; &#xD638;&#xCD9C;&#xB41C; &#xD6C4;, &#xBDF0;&#xC5D0; &#xB9E4;&#xD551;&#xC774; &#xB418;&#xC5C8;&#xC744; &#xB54C; &#xB85C;&#xADF8;&#xC785;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/image%20%282%29.png)
+
 ### Main.view.xml
 
 ```markup
@@ -131,7 +133,76 @@ UI5는 데이터를 관리하기 위해 여러 상태 함수를 제공합니다.
 
 UI5 Table에 데이터를 매핑하기 위해선 items에 해당 모델명을 작성해야합니다. UI5에서 화면에 모델을 매핑하는 방법은 여러 방법이 있습니다. 위의 코드의 방식은 Controller.js 파일에 TripPinServiceRW이라는 모델명에 매핑되는 JSON 배열 데이터를 가져오고, 배열의 Property에 해당하는 값을 cells에 하나씩 매핑하여 보여주는 방식입니다. 반면, 다른 방식으로 TripPinServiceRW이라는 모델명을 선언하지 않고 데이터를 가져오는 방식도 있습니다. \(=아래 코드를 참고하세요\)
 
+### 모델명을 선언하지 않고 XML View에 리스트 매핑
 
+#### Main.view.xml
 
+```markup
+<core:View xmlns:core="sap.ui.core"
+           xmlns:mvc="sap.ui.core.mvc"
+           xmlns="sap.m"
+           controllerName="views.main">
 
+    <Table items="{/value}">
+	    <headerToolbar>
+            <OverflowToolbar>
+                <Title id="title" text="TripPinServiceRW"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column>
+                <Label text="name" design="Bold"/>
+            </Column>
+            <Column>
+                <Label text="kind" design="Bold"/>
+            </Column>
+            <Column>
+                <Label text="url" design="Bold"/>
+            </Column>
+        </columns>
+        <items>
+			<ColumnListItem>
+				<cells>
+            <Text text="{name}" />
+            <Text text="{kind}" />
+            <Text text="{url}" />
+        </cells>
+			</ColumnListItem>
+    	</items>
+    </Table>
+    
+</core:View>
+```
+
+#### Main.controller.js
+
+```javascript
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel"
+  ],function(Controller,JSONModel){
+      "use strict"
+      return Controller.extend("views.main",{
+        onInit : function(){
+        },
+        onAfterRendering : function(){
+            this.onGetRequest('https://services.odata.org/V4/(S(epugafwj5m0rg30yoxbtltlk))/TripPinServiceRW/?$format=json');
+        },
+        onGetRequest : function(url){
+            fetch(url)
+            .then((res)=>res.json())
+            .then((param)=>{
+                this.getView().setModel(new JSONModel(param));
+            });
+        }
+      });
+  });
+  
+```
+
+보시고 뭔가 느낌이 오시나요? 위의 방식은 TripPinServiceRW을 호출하고 받은 JSON 배열의 Property를 활용해서 화면에 매핑한 방법입니다. 위의 방식이 복잡한 데이터를 관리하는데 있어서 편리할 것 같고, 지금 방식은 쉽고 빠르게 활용할 수 있는 장점이 있는 같습니다. 여러분들은 편하신대로 사용하시면 됩니다.
+
+### 화면결과
+
+![](../../.gitbook/assets/tableview%20%281%29.PNG)
 

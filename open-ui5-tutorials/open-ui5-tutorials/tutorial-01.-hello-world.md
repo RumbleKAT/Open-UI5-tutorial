@@ -2,7 +2,7 @@
 description: Open-UI5를 이용한 간단한 Web Page 만들기
 ---
 
-# Tutorial 01. Hello world
+# Tutorial 01. Hello world
 
 ## **들어가면서**
 
