@@ -14,7 +14,7 @@ description: UI5 컨트롤러의 생명주기를 알아보자
 
 UI5는 크게 4가지의 생명주기를 지닙니다. onInit, onBeforeRendering, onAfterRendering, onExit이 바로 그것입니다. 지금부터 하나씩 알아보도록 하겠습니다. 
 
-![UI5&#xC758; &#xC0DD;&#xBA85;&#xC8FC;&#xAE30;&#xB97C; &#xAC04;&#xB2E8;&#xD558;&#xAC8C; &#xC124;&#xBA85;&#xD558;&#xB294; &#xADF8;&#xB9BC;](../../.gitbook/assets/image%20%281%29.png)
+![UI5&#xC758; &#xC0DD;&#xBA85;&#xC8FC;&#xAE30;&#xB97C; &#xAC04;&#xB2E8;&#xD558;&#xAC8C; &#xC124;&#xBA85;&#xD558;&#xB294; &#xADF8;&#xB9BC;](../../.gitbook/assets/image%20%282%29.png)
 
 ### onInit\(\)
 
