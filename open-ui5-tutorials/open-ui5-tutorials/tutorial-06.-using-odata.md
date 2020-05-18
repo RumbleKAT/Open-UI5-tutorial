@@ -8,7 +8,7 @@ description: OData 다루기
 
 Odata는 UI5에서 데이터 부분을 다루는데 있어서 가장 중요한 부분입니다. 주로 Fiori단에서 웹 개발을 한다면, Odata는 절대적일 정도로 매우 많이 사용되는 프로토콜입니다. 일단 가볍게 Odata란 무엇인지 알아보겠습니다. [위키백과](https://en.wikipedia.org/wiki/Open_Data_Protocol) 에서 Odata의 정의를 찾아보면 이렇습니다.
 
-![https://www.nuget.org/profiles/OData/avatar?imageSize=512](../../.gitbook/assets/image.png)
+![https://www.nuget.org/profiles/OData/avatar?imageSize=512](../../.gitbook/assets/image%20%283%29.png)
 
 ## Odata의 정의
 

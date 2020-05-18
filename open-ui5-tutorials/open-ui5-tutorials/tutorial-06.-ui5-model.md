@@ -90,7 +90,7 @@ sap.ui.define([
 
 UI5는 데이터를 관리하기 위해 여러 상태 함수를 제공합니다. 위의 코드를 보시면, 브라우저에 View.xml 파일이 업데이트가 되기 전인 onAfterRendering 함수에 TripPinServiceRW 엔티티를 호출합니다. 호출된 데이터는 json 형태로 리턴되지만\(=param.value\), 아직 이 상태로 setModel을 하시면, 브라우저에 원하는 데이터가 매핑이 안되는 문제점이 있습니다. 이를 해결하기 위해 JSONModel로 해당 JSON 배열을 감싸주면, 저희는 원할하게 Model의 데이터를 View단에 보여줄 수 있습니다.
 
-![request&#xAC00; &#xC815;&#xC0C1;&#xC801;&#xC73C;&#xB85C; &#xD638;&#xCD9C;&#xB41C; &#xD6C4;, &#xBDF0;&#xC5D0; &#xB9E4;&#xD551;&#xC774; &#xB418;&#xC5C8;&#xC744; &#xB54C; &#xB85C;&#xADF8;&#xC785;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/image%20%284%29.png)
+![request&#xAC00; &#xC815;&#xC0C1;&#xC801;&#xC73C;&#xB85C; &#xD638;&#xCD9C;&#xB41C; &#xD6C4;, &#xBDF0;&#xC5D0; &#xB9E4;&#xD551;&#xC774; &#xB418;&#xC5C8;&#xC744; &#xB54C; &#xB85C;&#xADF8;&#xC785;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/image%20%287%29.png)
 
 ### Main.view.xml
 
