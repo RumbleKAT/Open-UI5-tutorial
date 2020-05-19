@@ -202,7 +202,7 @@ sap.ui.define([
 
 보시고 뭔가 느낌이 오시나요? 위의 방식은 TripPinServiceRW을 호출하고 받은 JSON 배열의 Property를 활용해서 화면에 매핑한 방법입니다. 위의 방식이 복잡한 데이터를 관리하는데 있어서 편리할 것 같고, 지금 방식은 쉽고 빠르게 활용할 수 있는 장점이 있는 같습니다. 여러분들은 편하신대로 사용하시면 됩니다.
 
-### Model을 수정하여, 화면에 데이터를 추가 
+### Model을 수정하여, 화면에 데이터를 추가하
 
 UI5에서 View.xml에 매핑된 Model 정보를 수정한다면, 화면 리스트를 실시간으로 변화시킬 수 있습니다. 아래 예제를 보시면,  TripPinServiceRW Odata 서비스에서 제공받은 데이터에서 새로 행을 추가하여 기존의   리스트에 추가한 행이 화면에 뿌려지는 것을 보실 수 있습니다. 
 
@@ -248,7 +248,47 @@ sap.ui.define([
 
 ![Odata &#xD1B5;&#xC2E0;&#xC5D0;&#xC11C; &#xBC1B;&#xC740; &#xAC12;&#xC744; &#xD654;&#xBA74;&#xC5D0; &#xBFCC;&#xB9B0; &#xACB0;&#xACFC;](../../.gitbook/assets/tableview%20%281%29.PNG)
 
-![Odata &#xD1B5;&#xC2E0;&#xC5D0;&#xC11C; &#xBC1B;&#xC740; &#xAC12;&#xC5D0; &#xC0C8;&#xB85C;&#xC6B4; &#xD589;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xC5EC; &#xD654;&#xBA74;&#xC5D0; &#xBFCC;&#xB9B0; &#xACB0;&#xACFC;](../../.gitbook/assets/image%20%2810%29.png)
+![Odata &#xD1B5;&#xC2E0;&#xC5D0;&#xC11C; &#xBC1B;&#xC740; &#xAC12;&#xC5D0; &#xC0C8;&#xB85C;&#xC6B4; &#xD589;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xC5EC; &#xD654;&#xBA74;&#xC5D0; &#xBFCC;&#xB9B0; &#xACB0;&#xACFC;](../../.gitbook/assets/image%20%2811%29.png)
 
+## 별책-this 지시자 사용하여 데이터 관리
 
+UI5는 JS 라이브러리이기 때문에 JS 고유의 문법을 사용할 수 있습니다. UI5에서 Model로 굳이 표현하지 않아도 되는 데이터는 this 지시자를 통해서 접근도 가능합니다. \(만약, this 지시자가 main.controller.js값이 아닌 경우, bind 함수나 apply 함수를 사용하여 this 지시자 값을 맞춰주셔야합니다.\) 아래 소스는 위에서 진행한 방법과 마찬가지로 OData 서비스의 결과 값을 화면에 뿌려줍니다. 하지만, forEach 반복문에서 this 지시자를 main.controller.js를 맞추기 위해 arrow function을 사용하였습니다.
+
+```javascript
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel"
+  ],function(Controller,JSONModel){
+      "use strict"
+      return Controller.extend("views.main",{
+        onInit : function(){
+            this.oModel = [];
+        },
+        onAfterRendering : function(){
+            this.onGetRequest('https://services.odata.org/V4/(S(epugafwj5m0rg30yoxbtltlk))/TripPinServiceRW/?$format=json');
+        },
+        onGetRequest : function(url){
+            fetch(url)
+            .then((res)=>res.json())
+            .then((param)=>{
+                param.value.forEach((val)=>{
+                    this.oModel.push(val);
+                });
+            }).then(()=>{
+                this.oModel.push({
+                    "name" : "testService",
+                    "kind" : "EntitySet",
+                    "url"  : "Photos"
+                });
+                console.log(this.oModel);
+                this.getView().setModel(new JSONModel(this.oModel),"TripPinServiceRW");
+                console.log(this.getView().getModel("TripPinServiceRW").getData());
+            });
+        },
+        
+      });
+  });
+```
+
+![&#xC704;&#xC758; &#xC18C;&#xC2A4;&#xC640; &#xAC19;&#xC740; &#xACB0;&#xACFC; &#xD654;&#xBA74;&#xC744; &#xBCFC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/image%20%2810%29.png)
 
