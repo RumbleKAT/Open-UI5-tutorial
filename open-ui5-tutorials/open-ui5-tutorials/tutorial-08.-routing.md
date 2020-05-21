@@ -89,3 +89,11 @@ manifest.json을 쉽게 이용하기 위해서 이제부터는 generator-easy-ui
 
 ## generator-easy-ui5 설정
 
+generator-easy-ui5는 OpenUI5 프로젝트를 빠르고 효과적으로 만들 수 있는 generator입니다. 리엑트로 치면 create-react-app과 비슷한 것으로 생각하셔도 되겠네요. 이 라이브러리는 SAP에서 Open-UI5 프로젝트 세팅을 도와주기 위해 만든 것입니다. 
+
+![https://www.npmjs.com/package/generator-easy-ui5](../../.gitbook/assets/image%20%2814%29.png)
+
+이제 본격적으로 설치 작업을 시작하겠습니다. generator-easy-ui5는 NPM으로 설치가 가능합니다. Nodejs를 먼저 설치해 주신 후,  CLI 창에 `npm i generator-easy-ui5 -g` 명령어를 쳐주세요.
+
+
+
