@@ -203,13 +203,15 @@ UI5는 라우팅 정보를 manifest.json 파일에 저장합니다. 먼저 confi
 
 ## Step 02. 디렉토리 구성 
 
-![](../../.gitbook/assets/image%20%2818%29.png)
+![](../../.gitbook/assets/image%20%2819%29.png)
 
 저희는 앞선 manifest.json 설정에서 MainView와 SecondView를 라우팅에 사용할 것으로 설정했습니다.  
 
 ## 결과화면
 
-![&#xCCAB;&#xBC88;&#xC9F8; &#xD398;&#xC774;&#xC9C0;](../../.gitbook/assets/image%20%2817%29.png)
+![&#xCCAB;&#xBC88;&#xC9F8; &#xD398;&#xC774;&#xC9C0;](../../.gitbook/assets/image%20%2818%29.png)
+
+![&#xB450;&#xBC88;&#xC9F8; &#xD398;&#xC774;&#xC9C0;](../../.gitbook/assets/image%20%2817%29.png)
 
 
 
