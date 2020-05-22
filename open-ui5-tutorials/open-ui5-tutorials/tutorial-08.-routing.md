@@ -207,6 +207,86 @@ UI5는 라우팅 정보를 manifest.json 파일에 저장합니다. 먼저 confi
 
 저희는 앞선 manifest.json 설정에서 MainView와 SecondView를 라우팅에 사용할 것으로 설정했습니다.  
 
+{% code title="MainView.controller.js" %}
+```javascript
+sap.ui.define([
+  "com/myorg/ui5Router/controller/BaseController"
+], function(Controller) {
+  "use strict";
+
+  return Controller.extend("com.myorg.ui5Router.controller.MainView", {
+    navToSecondPage : function(){
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.navTo("secondPage");
+    }
+  });
+});
+
+```
+{% endcode %}
+
+{% code title="SecondView.controller.js" %}
+```javascript
+sap.ui.define([
+    "com/myorg/ui5Router/controller/BaseController",
+    "sap/ui/core/routing/History"
+  ], function(Controller, History) {
+    "use strict";
+  
+    return Controller.extend("com.myorg.ui5Router.controller.MainView", {
+        onNavBack : function(){
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            if(sPreviousHash !== undefined){
+                window.history.go(-1);
+            }else{
+                this.getRouter().navTo("mainView",{}, true /* no history */)
+            }
+        }
+    });
+  });
+  
+```
+{% endcode %}
+
+{% code title="MainView.view.xml" %}
+```markup
+ <mvc:View controllerName="com.myorg.ui5Router.controller.MainView"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc">
+  <App id="idAppControl" >
+    <pages>
+      <Page title="{i18n>title}">
+        <content>
+          <Button text="navToSecondPage" press="navToSecondPage"/> 
+        </content>
+      </Page>
+    </pages>
+  </App>
+</mvc:View>
+```
+{% endcode %}
+
+{% code title="" %}
+```markup
+ <mvc:View controllerName="com.myorg.ui5Router.controller.SecondView"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc">
+  <App id="idAppControl">
+    <pages>
+      <Page title="{i18n>title}" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <Label text="SecondPage"/>
+        </content>
+      </Page>
+    </pages>
+  </App>
+</mvc:View>
+```
+{% endcode %}
+
 ## 결과화면
 
 ![&#xCCAB;&#xBC88;&#xC9F8; &#xD398;&#xC774;&#xC9C0;](../../.gitbook/assets/image%20%2818%29.png)
