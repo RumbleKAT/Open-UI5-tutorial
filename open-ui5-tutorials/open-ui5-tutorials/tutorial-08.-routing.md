@@ -205,7 +205,9 @@ UI5는 라우팅 정보를 manifest.json 파일에 저장합니다. 먼저 confi
 
 ![](../../.gitbook/assets/image%20%2819%29.png)
 
-저희는 앞선 manifest.json 설정에서 MainView와 SecondView를 라우팅에 사용할 것으로 설정했습니다.  
+저희는 앞선 manifest.json 설정에서 MainView와 SecondView를 라우팅에 사용할 것으로 설정했습니다. ui5에서 다른 웹 페이지로 이동하기 위해선, 현재 view 페이지의 라우터 정보를 알아야합니다. 이를 위해 아래와 같은 구문을 사용하면, 현재 페이지의 라우터 위치를 알수 있습니다. 또 페이지간 이동을 위해선, navTo\("이동할 페이지 라우트 명"\)으로 소스를 작성해주시면 됩니다.
+
+이 설명은 [이글](https://www.reimaginer.me/entry/spa-and-spa-routing)을 참고했습니다. SecondView.controller.js를 보시면, 브라우저 히스토리에 있는 이전 페이지로 이동하는 과정을 보실 수 있습니다. 기존의 웹 사이트에선 링크\(앵커 &lt;a href="\#"&gt;\)를 사용하여 페이지간 이동을 했었습니다. 앵커에 명시된 자원을 서버에 요청하고 응답받은 페이지를 브라우저에 표현하는 것입니다. SPA는 location.hash와 history API를 통해 웹 페이지간 논리적인 분리를 진행합니다. SecondView.controller.js에선 history API에 이전 페이지가 있는 겨우 이전 페이지로 이동하고, 없는 경우엔 메인 페이지로 이동하도록 코드를 작성했습니다. 
 
 {% code title="MainView.controller.js" %}
 ```javascript
