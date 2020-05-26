@@ -2,7 +2,7 @@
 description: OData 다루기
 ---
 
-# Tutorial 10. Using OData
+# Tutorial 12. Using OData
 
 ## 들어가면서
 

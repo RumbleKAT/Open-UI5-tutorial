@@ -14,8 +14,10 @@ description: Open-UI5 쉽고 빠르게 배우기
 6. [UI5 Model](tutorial-06.-ui5-model.md)
 7. [UI Elements](tutorial-07.-ui-elements.md)
 8. [Routing](tutorial-08.-routing.md)
-9. [TodoList](tutorial-09.-todolist.md)
-10. [Using Odata](tutorial-06.-using-odata.md)
+9. [Fragment](tutorial-09.-fragment.md)
+10. [Custom controls](tutorial-10.-custom-controls.md)
+11. [TodoList](tutorial-09.-todolist.md)
+12. [Using Odata](tutorial-06.-using-odata.md)
 
 
 

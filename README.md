@@ -12,8 +12,10 @@ description: Open-UI5를 이용하여 센스넘치는 Web Page 만들기
 6. [UI5 Model](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-ui5-model.md)
 7. [UI Element](open-ui5-tutorials/open-ui5-tutorials/tutorial-07.-ui-elements.md)
 8. [Routing](open-ui5-tutorials/open-ui5-tutorials/tutorial-08.-routing.md)
-9. [TodoList](open-ui5-tutorials/open-ui5-tutorials/tutorial-09.-todolist.md)
-10. [Using Odata](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-using-odata.md)
+9. [Fragment](open-ui5-tutorials/open-ui5-tutorials/tutorial-09.-fragment.md)
+10. [Custom controls](open-ui5-tutorials/open-ui5-tutorials/tutorial-10.-custom-controls.md)
+11. [TodoList](open-ui5-tutorials/open-ui5-tutorials/tutorial-09.-todolist.md)
+12. [Using Odata](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-using-odata.md)
 
 
 
