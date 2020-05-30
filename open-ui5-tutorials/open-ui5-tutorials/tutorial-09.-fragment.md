@@ -101,5 +101,9 @@ sap.ui.define([
 
 ## 결과화면
 
+![Open Dialog &#xBC84;&#xD2BC; &#xD074;&#xB9AD; &#xC804;](../../.gitbook/assets/2020-05-30-3.42.16%20%281%29.png)
 
+![Open Dialog &#xBC84;&#xD2BC; &#xD074;&#xB9AD; &#xD6C4;](../../.gitbook/assets/2020-05-30-3.42.28.png)
+
+![Input &#xD0DC;&#xADF8;&#xC758; &#xAC12;&#xC744; &#xC785;&#xB825;&#xD588;&#xC744; &#xB54C; &#xD654;&#xBA74;](../../.gitbook/assets/2020-05-30-3.43.34.png)
 
