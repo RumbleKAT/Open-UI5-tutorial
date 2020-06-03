@@ -68,7 +68,64 @@ sap.ui.define([
 ```
 {% endcode %}
 
-![](../../.gitbook/assets/image%20%2826%29.png)
+![](../../.gitbook/assets/image%20%2827%29.png)
 
 ![](../../.gitbook/assets/image%20%2825%29.png)
+
+ES6문법을 활용한 커스텀 리스트 
+
+{% code title="" %}
+```javascript
+sap.ui.define([
+    "sap/ui/core/Control",
+    "sap/ui/model/json/JSONModel"
+],function(Control,JSONModel){
+    "use strict"
+    return Control.extend("com.myorg.ui5Router.controller.myControl",{
+        metadata : {
+            properties : {
+                "text" : {
+                    type : "string"
+                }
+            },
+            events: {
+                press: {enablePreventDefault : true}
+             }
+        },
+        ontap: function () {
+            alert(`click ${this.getText()}`);   
+        },
+        init : function(){
+            var oData = [
+                { "title" : "1"},
+                { "title" : "2"},
+                { "title" : "3"}
+            ];
+            sap.ui.getCore().setModel(new JSONModel(oData), 'oModel');
+            // console.log(sap.ui.getCore().getModel("oModel"));
+        },
+        onGetList : function(){
+            var lists = sap.ui.getCore().getModel("oModel").getData();
+            
+            var res = `<ul>`;
+            lists.forEach((param)=>
+                res += `<li>${param.title}</li>`
+            );
+            res += `</ul>`;
+            return res;
+        },
+        renderer : function(oRM, oControl){
+            oRM.write(`<div`);
+            oRM.writeControlData(oControl); //
+            oRM.write(`>`);
+            oRM.write(`<h1>${oControl.getText()}</h1>
+            ${oControl.onGetList()}
+            </div>`);
+        }
+    })
+});
+```
+{% endcode %}
+
+![](../../.gitbook/assets/image%20%2826%29.png)
 
