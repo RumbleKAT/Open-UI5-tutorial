@@ -10,7 +10,11 @@ UI5에서 주어지는  label 태그에는 다른 이벤트를 삽입할 수 없
 
 ## 간단한 Custom Control 만들기
 
-custom control의 특징 중 하나는 기존 html 태그를 그대로 사용할 수 있고 html 태그에 이벤트를 삽입할 수 있습니다.
+custom control의 특징 중 하나는 기존 html 태그를 그대로 사용할 수 있고 html 태그에 이벤트를 삽입할 수 있습니다. 커스텀 컨트롤은 렌더러에서 사용자 정의 컨트롤의 HTML을 렌더링 하는 하는 작업을 의미합니다. 이를 위해선 두개의 매개변수가 있는 랜더 함수를 정의해야합니다. 
+
+이 두개의 매개변수로 RenderManager와  Render Control 객체를 들수 있습니다. RenderManager는 HTML을 조작하고 작성하는 많은 API를 제공합니다. 예를 들면 write의 경우 주어진 텍스트를 버퍼에 사용하는 기능, writeEscaped 는 HTML 텍스트를 이스케이프하여 버퍼에 작성하는 기능이고, WriteControlData는 컨트롤 데이터를 HTML에 작성하는 것입니다. addClass는 CSS 클래스를 추가하는 기능입니다. 반면 Render Control의 경우 주어진 컨트롤을 HTML 표현으로 바꾸어 렌더링 버퍼에 추가합니다. 
+
+아래의 소스는 html 태그를 write를 사용해서 넣고 writeControlData 를 사용하여 html 태그에 custom control의 코드를 연결시킨 코드입니다. 이로서, 해당 div 영역을 클릭한다면, 커스텀 컨트롤에 매핑된 text 값을 불러와 alert 함수를 수행하는 프로세스가 진행됩니다.
 
 {% code title="myControl.js" %}
 ```javascript
@@ -24,10 +28,7 @@ sap.ui.define([
                 "text" : {
                     type : "string"
                 }
-            },
-            events: {
-                press: {enablePreventDefault : true}
-             }
+            }
         },
         ontap: function () {
             alert(`click ${this.getText()}`);   
@@ -72,9 +73,63 @@ sap.ui.define([
 
 ![](../../.gitbook/assets/image%20%2825%29.png)
 
-ES6문법을 활용한 커스텀 리스트 
+## 커스텀 리스트
 
-{% code title="" %}
+지금까지 배웠던 UI5 Model의 내용을 활용해서 oData를 직접 커스텀 컨트롤에 보여줄 수 있습니다. 커스텀 컨트롤은 UI5 컨트롤러와 마찬가지로 init ,beforeRendering, afterRendering , exit의 생명주기를 따릅니다. 그리하여 init에서 UI5 Model을 만들고 이를 화면에 렌더링 시 뿌려주는 것이 가능합니다.
+
+### Internet Explorer 호환 버전
+
+```javascript
+sap.ui.define([
+    "sap/ui/core/Control",
+    "sap/ui/model/json/JSONModel"
+],function(Control,JSONModel){
+    "use strict"
+    return Control.extend("com.myorg.ui5Router.controller.myControl",{
+        metadata : {
+            properties : {
+                "text" : {
+                    type : "string"
+                }
+            }
+        },
+        ontap: function () {
+            alert('click ' + this.getText());   
+        },
+        init : function(){
+            var oData = [
+                { "title" : "1"},
+                { "title" : "2"},
+                { "title" : "3"}
+            ];
+            sap.ui.getCore().setModel(new JSONModel(oData), 'oModel');
+            // console.log(sap.ui.getCore().getModel("oModel"));
+        },
+        onGetList : function(){
+            var lists = sap.ui.getCore().getModel("oModel").getData();
+            
+            var res = '<ul>';
+            for(var i=0;i<lists.length;i++){
+                res += '<li>'+lists[i].title+'</li>'
+            }
+            res += '</ul>';
+            return res;
+        },
+        renderer : function(oRM, oControl){
+            oRM.write('<div');
+            oRM.writeControlData(oControl);
+            oRM.write('>');
+            oRM.write('<h1>'+ oControl.getText()+'</h1>');
+            oRM.write(oControl.onGetList());
+            oRM.write('</div>');
+        }
+    })
+});
+```
+
+### ES6 버전 
+
+{% code title="myControl.js" %}
 ```javascript
 sap.ui.define([
     "sap/ui/core/Control",
@@ -128,4 +183,6 @@ sap.ui.define([
 {% endcode %}
 
 ![](../../.gitbook/assets/image%20%2826%29.png)
+
+
 

@@ -5,6 +5,7 @@
 ## Open-UI5 tutorials
 
 * [Open-UI5 Tutorials](open-ui5-tutorials/open-ui5-tutorials/README.md)
+  * [Tutorial 13. i18n](open-ui5-tutorials/open-ui5-tutorials/tutorial-13.-i18n.md)
   * [Tutorial 12. Using OData](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-using-odata.md)
   * [Tutorial 11. TodoList](open-ui5-tutorials/open-ui5-tutorials/tutorial-09.-todolist.md)
   * [Tutorial 10. Custom controls](open-ui5-tutorials/open-ui5-tutorials/tutorial-10.-custom-controls.md)
