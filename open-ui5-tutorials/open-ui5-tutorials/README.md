@@ -18,6 +18,10 @@ description: Open-UI5 쉽고 빠르게 배우기
 10. [Custom controls](tutorial-10.-custom-controls.md)
 11. [TodoList](tutorial-09.-todolist.md)
 12. [Using Odata](tutorial-06.-using-odata.md)
+13. [i18n](tutorial-13.-i18n.md)
+14. [Custom format](tutorial-14.-custom-format.md)
+15. [Mock Server](tutorial-15.-mock-server.md)
+16. [Using Cordova](tutorial-16.-using-cordova.md)
 
 
 

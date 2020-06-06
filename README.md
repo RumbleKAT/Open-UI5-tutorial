@@ -16,6 +16,10 @@ description: Open-UI5를 이용하여 센스넘치는 Web Page 만들기
 10. [Custom controls](open-ui5-tutorials/open-ui5-tutorials/tutorial-10.-custom-controls.md)
 11. [TodoList](open-ui5-tutorials/open-ui5-tutorials/tutorial-09.-todolist.md)
 12. [Using Odata](open-ui5-tutorials/open-ui5-tutorials/tutorial-06.-using-odata.md)
+13. [i18n](open-ui5-tutorials/open-ui5-tutorials/tutorial-13.-i18n.md)
+14. [Custom format](open-ui5-tutorials/open-ui5-tutorials/tutorial-14.-custom-format.md)
+15. [Mock Server](open-ui5-tutorials/open-ui5-tutorials/tutorial-15.-mock-server.md)
+16. [Using Cordova](open-ui5-tutorials/open-ui5-tutorials/tutorial-16.-using-cordova.md)
 
 
 

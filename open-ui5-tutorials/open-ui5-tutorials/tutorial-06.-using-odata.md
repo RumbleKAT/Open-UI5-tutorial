@@ -976,5 +976,7 @@ Odata Entityset은 키값을 가지고 있습니다. 저희는 이 키값을 통
 }
 ```
 
+## 번외편 - spring boot를 사용한 odata 개
+
 
 
