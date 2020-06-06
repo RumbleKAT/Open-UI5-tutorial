@@ -184,5 +184,9 @@ sap.ui.define([
 
 ![](../../.gitbook/assets/image%20%2826%29.png)
 
+## UI5 View Element를 활용한 Custom control 만들기
+
+Custom control을 사용하면, 기존의 HTML 태그는 물론, UI5에서 기본적으로 제공하는 UI Element들도 사용할 수 있습니다. 사실 UI5는 주로 SAP Fiori 플랫폼의 웹앱을 만들기 위한 목적이기에, Custom Control을 제작함에 있어서 더 쉬운 기능들을 제공합니다. 예를 들면 html 태그를 직접 작성하지 않고, UI Element 객체를 불러와서 이를 Custom control에 넣는 것이 가능합니다.
+
 
 
