@@ -5,6 +5,7 @@
 ## Open-UI5 tutorials
 
 * [Open-UI5 Tutorials](open-ui5-tutorials/open-ui5-tutorials/README.md)
+  * [Tutorial 16. Using Cordova](open-ui5-tutorials/open-ui5-tutorials/tutorial-16.-using-cordova.md)
   * [Tutorial 15. Mock Server](open-ui5-tutorials/open-ui5-tutorials/tutorial-15.-mock-server.md)
   * [Tutorial 14. Custom format](open-ui5-tutorials/open-ui5-tutorials/tutorial-14.-custom-format.md)
   * [Tutorial 13. i18n](open-ui5-tutorials/open-ui5-tutorials/tutorial-13.-i18n.md)
