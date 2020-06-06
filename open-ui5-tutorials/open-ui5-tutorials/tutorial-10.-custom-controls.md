@@ -267,3 +267,7 @@ sap.ui.define([
 
 ![My Test &#xBC84;&#xD2BC;&#xC744; &#xB204;&#xB978; &#xD6C4;](../../.gitbook/assets/image%20%2830%29.png)
 
+## Custom Control Parameter
+
+Custom Control에서 제작한 값을 파라미터로 컨트롤러에 전달하는 방법을 배워보도록 하겠습니다. 
+
