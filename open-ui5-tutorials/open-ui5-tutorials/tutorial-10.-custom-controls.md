@@ -188,5 +188,82 @@ sap.ui.define([
 
 Custom control을 사용하면, 기존의 HTML 태그는 물론, UI5에서 기본적으로 제공하는 UI Element들도 사용할 수 있습니다. 사실 UI5는 주로 SAP Fiori 플랫폼의 웹앱을 만들기 위한 목적이기에, Custom Control을 제작함에 있어서 더 쉬운 기능들을 제공합니다. 예를 들면 html 태그를 직접 작성하지 않고, UI Element 객체를 불러와서 이를 Custom control에 넣는 것이 가능합니다.
 
+```javascript
+sap.ui.define([
+    "sap/ui/core/Control",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/Label",
+    "sap/m/Button",
+    "sap/m/VBox"
+],function(Control,JSONModel, Label, Button, VBox){
+    "use strict"
+    return Control.extend("com.myorg.ui5Router.controller.myControl",{
+        metadata : {
+            properties : {
+                "text" : {
+                    type : "string"
+                }
+            },//aggregation에 원하는 UI5 element를 선언
+            aggregations :{
+                _VBox : {type : "sap.m.VBox", multiple: false, visibility : "hidden" }
+            },
+            events :{
+                "press" : {}
+            }
 
+        },
+        init : function(){
+            var oData = [
+                { "title" : "1"},
+                { "title" : "2"},
+                { "title" : "3"}
+            ];
+            sap.ui.getCore().setModel(new JSONModel(oData), 'oModel');
+
+            var oLabel = new Label({
+                text : "My test title"
+            });
+
+            var oButton = new Button({
+                text : "My Test Button",
+                press : this.onTest.bind(this)
+            });
+            //metadata에서 선언한 aggregation을 init 함수에서 setAggregation 수행
+            this.setAggregation("_VBox",new VBox({
+                items : [
+                    oLabel,
+                    oButton
+                ]
+            }));
+        },
+        onTest : function(){
+            alert("test Button Clicked!")           
+        },
+        onGetList : function(){
+            var lists = sap.ui.getCore().getModel("oModel").getData();
+            
+            var res = '<ul>';
+            for(var i=0;i<lists.length;i++){
+                res += '<li>'+lists[i].title+'</li>'
+            }
+            res += '</ul>';
+            return res;
+        },
+        renderer : function(oRM, oControl){
+            oRM.write('<div');
+            oRM.writeControlData(oControl);
+            oRM.write('>');
+            oRM.write('<h1>'+ oControl.getText()+'</h1>');
+            oRM.write(oControl.onGetList());
+            //init 함수에서 setAggregation 수행한 것을 renderer 함수에서 수행하면 UI5 Element 렌더링 성공
+            oRM.renderControl(oControl.getAggregation("_VBox"));
+            oRM.write('</div>');
+        }
+    })
+});
+```
+
+![](../../.gitbook/assets/image%20%2829%29.png)
+
+![My Test &#xBC84;&#xD2BC;&#xC744; &#xB204;&#xB978; &#xD6C4;](../../.gitbook/assets/image%20%2830%29.png)
 
