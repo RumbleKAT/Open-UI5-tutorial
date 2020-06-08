@@ -269,5 +269,118 @@ sap.ui.define([
 
 ## Custom Control Parameter
 
-Custom Control에서 제작한 값을 파라미터로 컨트롤러에 전달하는 방법을 배워보도록 하겠습니다. 
+Custom Control에서 제작한 값을 파라미터로 컨트롤러에 전달하는 방법을 배워보도록 하겠습니다. 간단하게  Custom Control에서 Input 태그에서 입력받은 값을 MainView.controller.js에서 받아오는 예시를 만들어보겠습니다.  Custom Control의 장점은 press나 ontap과 같은 UI5에서 기본적으로 제공하는 이벤트 말고도 자신만의 이벤트를 만들고, 전달할 파라미터 정보를 properties에 설정할 수 있습니다.
+
+#### Custom control 활용 팁
+
+Custom control는 생각보다 object Id를 통한 value 값 접근이 쉽지 않습니다. 이 경우, sap.ui.getCore\("ID"\).byId\(\)나 this.getView\("ID"\).byId보다는 this.getAggregations\("\_Input"\) 처럼 getAggregation을 이용하는 것이 낫습니다. 
+
+{% code title="control/InputControl.js" %}
+```javascript
+sap.ui.define([
+	"sap/ui/core/Control",
+	"sap/m/Input",
+	"sap/m/Button"
+], function (Control, Input, Button) {
+	"use strict";
+	return Control.extend("com.myorg.ui5Router.controller.InputControl", {
+		metadata : {
+			properties : { //properties 아래에 Custom control에서 다룰 속성값을 정의할 수 있습니다. 
+				value: 	{type : "string", defaultValue : ""}
+			},
+			aggregations : {
+				_Input : {type : "sap.m.Input", multiple: false, visibility : "hidden"},
+				_Button : {type : "sap.m.Button", multiple: false, visibility : "hidden" }
+			},
+			events : { //UI5에서 제공하는  기본 이벤트 말고 자신의 이벤트 설정 예시, 해당 이벤트가 실행될 때, 전달될 속성 정보도 세팅 가능 
+				"myEvent" : {
+					parameters : {
+						value : {type : "string"}
+					}
+				}
+			}
+		},
+		init : function () {
+			this.setAggregation("_Input", new Input({
+			}).addStyleClass("sapUiTinyMargin"));
+			this.setAggregation("_Button", new Button({
+				text: "pass the Value",
+				press: this._onSubmit.bind(this)
+			}));
+		},
+		_onSubmit : function () {
+			this.fireEvent("myEvent", { //커스텀 이벤트 수행시, fireEvent 함수에 앞서 정의한 Custom Event 명을 입력하여 해당 이벤트가 수행될 때, viewController에 전달할 값 설정 가능 
+				value: this.getAggregation("_Input").getValue()
+			});
+		},
+		renderer : function (oRM, oControl) {
+			oRM.write("<div");
+			oRM.writeControlData(oControl);
+			oRM.writeClasses();
+			oRM.write(">");
+			oRM.renderControl(oControl.getAggregation("_Input"));
+			oRM.renderControl(oControl.getAggregation("_Button"));
+			oRM.write("</div>");
+		}
+	});
+});
+```
+{% endcode %}
+
+{% code title="MainView.view.xml" %}
+```markup
+ <mvc:View controllerName="com.myorg.ui5Router.controller.MainView"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:ui="com.myorg.ui5Router.control">
+  <App id="idAppControl" >
+    <pages>
+      <Page title="{i18n>title}">
+        <content>
+          <ui:InputControl class="sapUiSmallMarginBeginEnd" myEvent="onGetValue"/>
+        </content>
+      </Page>
+    </pages>
+  </App>
+</mvc:View>
+```
+{% endcode %}
+
+{% code title="MainView.controller.js" %}
+```javascript
+sap.ui.define([
+  "com/myorg/ui5Router/controller/BaseController",
+  "sap/ui/model/json/JSONModel",
+  "sap/m/MessageToast"
+], function(Controller, JSONModel,MessageToast) {
+  "use strict";
+
+  return Controller.extend("com.myorg.ui5Router.controller.MainView", {
+    onInit : function(){
+      var oData = {
+        value : 'sample'
+      };
+      var oModel = new JSONModel(oData);
+			this.getView().setModel(oModel);
+    },
+    navToSecondPage : function(){
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.navTo("secondPage");
+    },
+    onGetValue : function(oEvent){
+      var fValue = oEvent.getParameter("value");
+      console.log(fValue);
+    }
+  });
+});
+
+```
+{% endcode %}
+
+![](../../.gitbook/assets/image%20%2832%29.png)
+
+![](../../.gitbook/assets/image%20%2831%29.png)
+
+![Input &#xD0DC;&#xADF8;&#xC5D0;&#xC11C; &#xC804;&#xB2EC;&#xBC1B;&#xC740; &#xAC12;&#xC744; console.log&#xB85C; &#xB744;&#xC6B4;&#xB2E4;.](../../.gitbook/assets/image%20%2833%29.png)
 
