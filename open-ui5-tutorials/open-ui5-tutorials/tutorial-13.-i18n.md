@@ -44,17 +44,10 @@ sap.ui.define([
       this.getView().setModel(i18nModel, "i18n");
     },
     onAfterRendering : function(){
-      var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-      this.byId("oLabel").setText(oResourceBundle.getText("appDescription",
-        [
-          oResourceBundle.getText("labelTitle1"),
-          oResourceBundle.getText("labelTitle2"),
-          oResourceBundle.getText("labelTitle3")
-        ]));
+      this.onChangeLabel();
     },
     onEvent : function(){
       var country = this.getView().getModel("country").getProperty("/country");
-      var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
 
       if(country === "kr"){  
         this.getView().setModel(new JSONModel({ country : "en" }),"country");
@@ -62,9 +55,17 @@ sap.ui.define([
       }else{
         this.getView().setModel(new JSONModel({ country : "kr" }),"country");
         sap.ui.getCore().getConfiguration().setLanguage("kr"); //강제로 한국어 설정 원래는 브라우저 언어 설정에 따라 자동으로 i18n properties가 반영      
-      }
-
-      this.byId("oLabel").setText(oResourceBundle.getText("appDescription",[oResourceBundle.getText("labelTitle")]));
+      }      
+      this.onChangeLabel();
+    },
+    onChangeLabel : function(){
+      var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+      this.byId("oLabel").setText(oResourceBundle.getText("appDescription",
+        [
+          oResourceBundle.getText("labelTitle1"),
+          oResourceBundle.getText("labelTitle2"),
+          oResourceBundle.getText("labelTitle3")
+        ]));
     }
   });
 });
@@ -119,5 +120,9 @@ labelTitle3=라벨 제목3
 ```
 {% endcode %}
 
-![](../../.gitbook/assets/image%20%2834%29.png)
+![&#xC601;&#xC5B4; &#xBAA8;&#xB4DC; \(=chage nation &#xD074;&#xB9AD;&#xC2DC; &#xD55C;&#xAD6D;&#xC5B4;&#xB85C; &#xC804;&#xD658;\) ](../../.gitbook/assets/image%20%2836%29.png)
+
+![&#xD55C;&#xAD6D;&#xC5B4; &#xBAA8;&#xB4DC;](../../.gitbook/assets/image%20%2835%29.png)
+
+
 
