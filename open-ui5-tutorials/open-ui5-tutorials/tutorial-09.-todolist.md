@@ -24,5 +24,70 @@ description: Local Storage를 활용한 TodoList 만들기
 
 ![](../../.gitbook/assets/image%20%2823%29.png)
 
+## LocalStorage 활용
 
+UI5은 자체적으로 jQuery를 포함하고 있습니다. UI5에서 localStorage를 사용하기 위해선,  아래의 선언문으로 localStorage 객체를 정의할수 있습니다. 그리고 TodoList는 데이터를 읽고, 쓰고, 수정하고, 지우는 기능을 가지고 있습니다. \(Create, Read, Update, Delete\) 반면, localStorage는 데이터를 불러오고\(GET\), 정의하는\(SET\)기능을 제공합니다. CRUD 기능을 제공하기 위해 생성과 수정 기능은 localStorage의 SET 함수를 이용하였고, 삭제 기능은 JS filter 함수를 이용하여 특정 element를 제거한 객체를 저장하는 방식으로 구현을 진행했습니다.
+
+```javascript
+this._storage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+```
+
+{% code title="model/localStorage.js" %}
+```javascript
+sap.ui.define([], function() {
+	"use strict";
+	return {
+		init : function(){
+			this._storage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+			let temp = this._storage.get("todoList");
+			if(temp){
+				this.todoList = JSON.parse(temp);
+			}else{
+				this.todoList = [
+					{ title : "song" , id : 1, type : "todo", description : "설명....."},
+					{ title: "song", id: 5,type: "done" ,description : "설명....."},
+					{ title: "song", id: 4, type : "doing" ,description : "설명....."},
+					{ title: "song", id: 3, type : "todo" ,description : "설명....."},
+				  ];
+			}
+		},
+		getData : function(type){
+			return this.getDatas().filter(element => {
+				return element.type === type
+			});
+		},
+		getDatas : function(){
+			return this.todoList;
+		},
+		deleteDataAll : function(){
+			this.todoList = [];
+			this.setData([]);
+		},
+		deleteData : function(id){
+			let leftData = JSON.parse(this.getDatas()).filter( element => element.id !== id);
+			this.setData(leftData);
+			this.updateData(leftData);
+		},
+		setData : function(data){
+			this._storage.put('todoList',JSON.stringify(data));
+			this.updateData(data);
+		},
+		updateData : function(data){
+			this.todoList = data;
+		}
+	};
+});
+
+```
+{% endcode %}
+
+
+
+## Add TodoList
+
+이번 튜토리얼에서 중요하게 다룰 부분은 바로 UI5 Filter입니다. 
+
+
+
+## TodoList
 
