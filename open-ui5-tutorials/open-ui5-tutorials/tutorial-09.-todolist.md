@@ -81,13 +81,367 @@ sap.ui.define([], function() {
 ```
 {% endcode %}
 
-
-
 ## Add TodoList
 
-이번 튜토리얼에서 중요하게 다룰 부분은 바로 UI5 Filter입니다. 
+```javascript
+sap.ui.define([
+   'sap/ui/core/mvc/Controller',
+   "com/myorg/todoList/model/localStorage",
+   "sap/ui/model/json/JSONModel"
+],function(Controller,models, JSONModel){
+    'use strict'
+    return Controller.extend('com.myorg.todoList.controller.AddTodoList',{
+        onInit(){
+            console.log("loaded!!...");
+            var categories = {
+                "types" : [
+                    {
+                        name : "todo"
+                    },
+                    {
+                        name : "doing"
+                    },
+                    {
+                        name : "done"
+                    }
+                ]
+            };
+            var dataObject = {
+                title: "",
+                type : "",
+                description : ""
+            }
+            var dataObjectJSON = new JSONModel(dataObject);
+            var categoriesJSON = new JSONModel(categories);
 
+            this.getView().setModel(dataObjectJSON);
+            this.getView().setModel(categoriesJSON,'categories');
+        },
+        NavToMain(){
+            var oRouter = this.getRouter();
+            oRouter.initialize(); // restart the router
+            oRouter.navTo('RouteMainView',true);
+        },
+        getRouter : function () {
+          return sap.ui.core.UIComponent.getRouterFor(this)
+        },
+        onSave : function(){
+            var oModel = this.getView().getModel().getData();
+            
+            if(oModel.title === '' || oModel.type === ''  || oModel.description === '' ){
+                alert("please write all items!");   
+                this.onClear();
+                return;
+            }else if(!(oModel.type === "todo" || oModel.type === "doing" || oModel.type === "done" )){
+                alert("please select right item!");   
+                this.onClear();
+                return;
+            }
+            
+            //save item
+            var todoLists = models.getDatas();
+            const maxIdx = todoLists.sort((el1,el2)=>el2.id - el1.id);
+            let nextIdx = undefined;
+            console.log(maxIdx);
+            if(maxIdx.length === 0){
+                nextIdx = 1;
+            }else{
+                nextIdx = maxIdx[0].id + 1;
+            }
+            
+            oModel.id = nextIdx;
+            todoLists.push(oModel);
 
+            console.log(todoLists);
+            models.setData(todoLists);
+            alert("save success!");            
+            
+            this.onClear();
+        },
+        onClear : function(){
+            var dataObject = {
+                title: "",
+                type : "",
+                description : ""
+            }
+            this.getView().setModel(new JSONModel(dataObject));
+        }
+    })
+})
+```
+
+```markup
+<mvc:View
+    controllerName="com.myorg.todoList.controller.AddTodoList"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    >
+    <App id="idAppControl">
+        <Page id="addTodoList" 
+            title="{i18n>AddTodoList}" 
+            navButtonPress="onNavBack"
+            class="sapUiResponsiveContentPadding">
+             <customHeader>
+                <Bar>
+                    <contentLeft>
+                        <Button icon="sap-icon://arrow-left" press="NavToMain" />
+                    </contentLeft>
+                    <contentMiddle>
+		                <Text text = "Add TodoList"></Text>
+                    </contentMiddle> 
+                </Bar>
+            </customHeader>
+            <Panel width="auto" headerText="Add TodoList">
+                <content>
+                    <f:SimpleForm layout="ResponsiveGridLayout" id="SimpleForm" editable="true" width="100%">
+                    <f:content id="FormContent">                    
+                        <VBox>
+                            <items>
+                                <Label text="Title" id="title"/>
+                                <Input width="100%" id="title_id" placeholder="Please write the title.." value="{/title}"/>
+
+                                <Label text="Type" id="type"/>
+                                <ComboBox id="comboBox" items="{path: 'categories>/types'}" width="100%" value="{/type}">
+                                    <items>
+                                        <core:Item key="{categories>name}" text="{categories>name}"/> 
+                                    </items>
+                                </ComboBox>
+                                <Label text="Description" id="description"/>
+                                <TextArea width="100%" value="{/description}" rows="5" id="description_id" placeholder="Please write the description.."/>
+                            </items>
+                        </VBox>
+                    </f:content>
+                </f:SimpleForm>
+                <FlexBox
+					height="100px"
+					alignItems="Start"
+					justifyContent="Center">
+					<items>
+						<Button width="100px" type="Accept" text="submit" press="onSave" class="sapUiSmallMarginEnd" />
+						<Button width="100px" type="Reject" text="clear" press="onClear" class="sapUiSmallMarginEnd" />
+					</items>
+				</FlexBox>
+                </content>
+            </Panel>
+        </Page>
+    </App>
+</mvc:View>
+```
 
 ## TodoList
+
+```javascript
+sap.ui.define([
+  "sap/ui/core/mvc/Controller",
+  "com/myorg/todoList/model/localStorage",
+  "sap/ui/model/json/JSONModel"
+], function(Controller,models, JSONModel) {
+  "use strict";
+
+  return Controller.extend("com.myorg.todoList.controller.MainView", {
+	onInit : function(){
+    models.init();
+    let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+    oRouter.attachRouteMatched(this._onObjectMatched, this);
+  },
+  _onObjectMatched: function(oEvent) {
+    var todoList = Object.assign([],models.getDatas());
+		var oModel = new JSONModel(todoList);
+    this.getView().setModel(oModel,"todoList");
+  },
+  onBeforeRendering : function(){
+    var todoList = Object.assign([],models.getDatas());
+		var oModel = new JSONModel(todoList);
+    console.log(todoList);
+		this.getView().setModel(oModel,"todoList");
+  },
+  onAccept : function(oEventArgs){
+    let row = oEventArgs.getSource();
+    let context = row.getBindingContext("todoList");
+    let content = context.oModel.getProperty(context.sPath);
+
+    if(content.type === "todo"){
+      content.type = "doing";
+    }else if(content.type === "doing"){
+      content.type = "done";
+    }
+    
+    let oModel =this.getView().getModel("todoList").getData();
+    oModel.forEach(element => {
+      if(element.id === content.id){
+        element = content;
+      } 
+    });
+    models.setData(oModel);
+
+    this.getView().setModel(new JSONModel(oModel),"todoList");
+  },
+ 
+  onDelete : function(oEventArgs){
+    let row = oEventArgs.getSource();
+    let context = row.getBindingContext("todoList");
+    let content = context.oModel.getProperty(context.sPath);
+    
+    let oModel =this.getView().getModel("todoList").getData();
+    let temp = oModel.filter(item => content.id != item.id);
+    models.setData(temp);
+
+    this.getView().setModel(new JSONModel(temp),"todoList");
+  },
+  NavToAddTodoList : function(){
+    console.log("!!");
+    this.getRouter().navTo("AddTodoList",{}, false);
+  },
+  getRouter : function () {
+    return sap.ui.core.UIComponent.getRouterFor(this)
+  },
+  clearAllData : function(){
+    models.deleteDataAll();
+    let oModel = [];
+    this.getView().setModel(new JSONModel(oModel),"todoList");
+  }
+  });
+});
+
+```
+
+```markup
+ <mvc:View controllerName="com.myorg.todoList.controller.MainView"
+	xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
+	xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+    displayBlock="true"
+    height="100%">
+	<App id="idAppControl">
+		<pages>
+			<Page title="{i18n>title}">
+				<headerContent>
+				<Button
+					icon="sap-icon://add"
+					press="NavToAddTodoList" />
+				<Button
+					icon="sap-icon://delete"
+					press="clearAllData" />
+				</headerContent>
+				<content>
+				<l:Grid defaultSpan="L4 M8 S12" class="sapUiSmallMarginTop">
+					<l:content alignItems="Center">
+					<VBox alignItems="Center">
+					<Title text="Todo" level="H2"/>
+					<l:VerticalLayout content="{
+					 path : 'todoList>/', 
+					 filters : [ 
+				 		{ path : 'type', operator : 'EQ', value1 : 'todo' }
+					]
+				 }" >
+					<f:Card
+					class="sapUiSmallMargin"
+					width="300px"
+					>
+						<f:header>
+							<card:Header
+								title="{todoList>title}"
+								subtitle="{todoList>name}"/>
+						</f:header>
+						<f:content>
+							<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+								<VBox>
+									<Text text="{todoList>description}"/>
+								</VBox>
+								<FlexBox
+									alignItems="Start"
+									justifyContent="Center">
+									<items>
+										<Button type="Accept"
+										icon="sap-icon://accept" 
+										press="onAccept" class="sapUiSmallMarginEnd" />
+										<Button type="Reject"
+										icon="sap-icon://delete"
+										press="onDelete" class="sapUiSmallMarginEnd" />
+									</items>
+								</FlexBox>
+							</VBox>
+						</f:content>
+					</f:Card>
+				</l:VerticalLayout>
+				</VBox>
+				<VBox alignItems="Center">
+					<Title text="Doing" level="H2"/>
+				<l:VerticalLayout content="{
+					 path : 'todoList>/', 
+					 filters : [ 
+				 		{ path : 'type', operator : 'EQ', value1 : 'doing' }
+					]
+				 }" >
+					<f:Card
+					class="sapUiSmallMargin"
+					width="300px"
+					>
+						<f:header>
+							<card:Header
+								title="{todoList>title}"
+								subtitle="{todoList>name}"/>
+						</f:header>
+						<f:content>
+							<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+								<VBox>
+									<Text text="{todoList>description}"/>
+								</VBox>
+								<FlexBox
+									alignItems="Start"
+									justifyContent="Center">
+									<items>
+										<Button type="Accept"
+										icon="sap-icon://accept" 
+										press="onAccept" class="sapUiSmallMarginEnd" />
+										<Button type="Reject"
+										icon="sap-icon://delete"
+										press="onDelete" class="sapUiSmallMarginEnd" />
+									</items>
+								</FlexBox>
+							</VBox>
+						</f:content>
+					</f:Card>
+				</l:VerticalLayout>
+								</VBox>
+					<VBox alignItems="Center">
+					<Title text="Done" level="H2"/>
+					<l:VerticalLayout content="{
+							path : 'todoList>/', 
+							filters : [ 
+								{ path : 'type', operator : 'EQ', value1 : 'done' }
+							]
+						}" >
+							<f:Card
+							class="sapUiSmallMargin"
+							width="300px">
+								<f:header>
+									<card:Header
+										title="{todoList>title}"
+										subtitle="{todoList>name}"/>
+								</f:header>
+								<f:content>
+									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+										<VBox>
+											<Text text="{todoList>description}"/>
+										</VBox>
+									</VBox>
+								</f:content>
+							</f:Card>
+						</l:VerticalLayout> 
+						</VBox>
+					</l:content>
+				</l:Grid>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View> 
+```
 
