@@ -86,11 +86,17 @@ sap.ui.define([], function() {
 todoList를 만들기 위해선 먼저, todoList를 추가하는 것부터 시작해야 합니다. 일단 todoList 특성상 todo, doing, done의 3가지 카테고리를 가집니다. 그리고 제목과 내용을 카드뷰로 보여주는 구조이지요. 특히 add TodoList 페이지에선 데이터를 추가하는 역할만 하면 되기 때문에, dataObject 객체에 입력할 데이터 형식을 정의하였습니다.
 
 ```javascript
- var dataObject = {
- title: "",
- type : "",
- description : ""
+var dataObject = {
+   title: "",
+   type : "",
+   description : ""
 }
+
+var dataObjectJSON = new JSONModel(dataObject);
+var categoriesJSON = new JSONModel(categories);
+
+this.getView().setModel(dataObjectJSON);
+this.getView().setModel(categoriesJSON,'categories');
 ```
 
 UI5는 one-way binding과 two-way binding을 사용할 수 있습니다. todoList를 예로 들면 할일을 보여주는 카드뷰는 데이터가 일방향적으로 사용자에게 보여집니다. 반면, 할일을 추가하는 뷰는 초기엔 빈값으로 초기화가 되어있지만, 나중에 사용자의 입력을 받으면, 이에 따라 Model의 값도 자동으로 변환이 되어 사용자가 작성한 값을 저장해야 합니다. 
@@ -246,8 +252,13 @@ sap.ui.define([
 
 ## TodoList 만들기
 
+todoList를 보여주는 부분인 MainView.controller.js에서는 앞서 정의한 todo doing done 3가지 status에 따라서 값을 필터링하여 보여주는 작업을 진행합니다. 우선 localStorage에 저장된 값을 onBeforeRendering 상태에서 가져오고, 이를 todoList Model로 정의하였습니다. 
 
+todoList 특성상 완료된 일은 다음 단계로 보여지고, 삭제할 일은 삭제되어야합니다. 완료된 일을 처리하기 위해 onAccept 함수에서는 해당 이벤트가 발생한 부모 컴포넌트에 바인딩된 정보를 가지고 해당 type이 todo인 경우에는 doing으로, doing인 경우에는 done으로 status 값을 바꿔주었습니다. UI5는 Model의 데이터가 바뀌면 자동으로 렌더링을 진행합니다. \(마치 리엑트와 비슷하네요\) 만약 type이 바뀐다면, 별다른 처리를 하지않아도 바뀐 type의 verticalLayout에 매핑이 되어 있을 것입니다.
 
+### Filter 사용하
+
+{% code title="MainView.controller.js" %}
 ```javascript
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
@@ -322,6 +333,7 @@ sap.ui.define([
 });
 
 ```
+{% endcode %}
 
 ```markup
  <mvc:View controllerName="com.myorg.todoList.controller.MainView"
