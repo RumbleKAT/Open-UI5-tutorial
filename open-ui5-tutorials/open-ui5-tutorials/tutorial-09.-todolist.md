@@ -83,6 +83,20 @@ sap.ui.define([], function() {
 
 ## Add TodoList
 
+todoList를 만들기 위해선 먼저, todoList를 추가하는 것부터 시작해야 합니다. 일단 todoList 특성상 todo, doing, done의 3가지 카테고리를 가집니다. 그리고 제목과 내용을 카드뷰로 보여주는 구조이지요. 특히 add TodoList 페이지에선 데이터를 추가하는 역할만 하면 되기 때문에, dataObject 객체에 입력할 데이터 형식을 정의하였습니다.
+
+```javascript
+ var dataObject = {
+ title: "",
+ type : "",
+ description : ""
+}
+```
+
+UI5는 one-way binding과 two-way binding을 사용할 수 있습니다. todoList를 예로 들면 할일을 보여주는 카드뷰는 데이터가 일방향적으로 사용자에게 보여집니다. 반면, 할일을 추가하는 뷰는 초기엔 빈값으로 초기화가 되어있지만, 나중에 사용자의 입력을 받으면, 이에 따라 Model의 값도 자동으로 변환이 되어 사용자가 작성한 값을 저장해야 합니다. 
+
+그러므로, Add todoList에서는 two-way binding을 이용하여 사용자의 입력 따라 변화하는 값을 저장할 것입니다. onSave 버튼을 누르면,  앞서 선언한 dataObjectJSON  객체에 매핑된 값이 있는 경우에 데이터를 저장하는 방식으로 구현을 진행했습니다. 
+
 ```javascript
 sap.ui.define([
    'sap/ui/core/mvc/Controller',
@@ -92,7 +106,6 @@ sap.ui.define([
     'use strict'
     return Controller.extend('com.myorg.todoList.controller.AddTodoList',{
         onInit(){
-            console.log("loaded!!...");
             var categories = {
                 "types" : [
                     {
@@ -231,7 +244,9 @@ sap.ui.define([
 </mvc:View>
 ```
 
-## TodoList
+## TodoList 만들기
+
+
 
 ```javascript
 sap.ui.define([

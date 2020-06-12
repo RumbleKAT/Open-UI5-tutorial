@@ -12,5 +12,7 @@ Cordova란 안드로이드 앱이나 iOS 앱을 만들때, java, kotlin, swift�
 
 ![Apache Cordova](../../.gitbook/assets/image%20%2828%29.png)
 
+## Hello world 띄우기
 
+cordova를 이용해서 간단한 안드로이드 어플리케이션과 ios 어플리케이션을 만들어 보겠습니다. 
 
