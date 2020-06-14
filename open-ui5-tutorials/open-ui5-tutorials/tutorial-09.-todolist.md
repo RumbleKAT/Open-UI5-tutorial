@@ -258,9 +258,13 @@ todoList 특성상 완료된 일은 다음 단계로 보여지고, 삭제할 일
 
 ### Filter 스마트하게 사용하기
 
-UI5에서 VBox나 Vertical Layout과 같이 Model의 데이터를 배열의 형태로 보여주는 태그에선 content 속성값에 매핑할 model의 배열 정보를 입력합니다. 하지만 여기에 필요한 값만 보여주는 Filter를 이용한 커스터마이징 작업이 가능합니다.
 
-### Content 속성 알아보기​
+
+UI5에서 VBox나 Vertical Layout과 같이 Model의 데이터를 배열의 형태로 보여주는 태그에선 content 속성값에 매핑할 model의 배열 정보를 입력합니다. 하지만 여기에 필요한 값만 보여주는 Filter를 이용한 커스터마이징 작업이 가능합니다. ​
+
+### Filter 객체를 선언하여 필터 추가 
+
+### Content 속성에 필터를 추가​
 
 ![](../../.gitbook/assets/cardinality.png)
 
