@@ -256,7 +256,13 @@ todoList를 보여주는 부분인 MainView.controller.js에서는 앞서 정의
 
 todoList 특성상 완료된 일은 다음 단계로 보여지고, 삭제할 일은 삭제되어야합니다. 완료된 일을 처리하기 위해 onAccept 함수에서는 해당 이벤트가 발생한 부모 컴포넌트에 바인딩된 정보를 가지고 해당 type이 todo인 경우에는 doing으로, doing인 경우에는 done으로 status 값을 바꿔주었습니다. UI5는 Model의 데이터가 바뀌면 자동으로 렌더링을 진행합니다. \(마치 리엑트와 비슷하네요\) 만약 type이 바뀐다면, 별다른 처리를 하지않아도 바뀐 type의 verticalLayout에 매핑이 되어 있을 것입니다.
 
-### Filter 사용하
+### Filter 스마트하게 사용하기
+
+UI5에서 VBox나 Vertical Layout과 같이 Model의 데이터를 배열의 형태로 보여주는 태그에선 content 속성값에 매핑할 model의 배열 정보를 입력합니다. 하지만 여기에 필요한 값만 보여주는 Filter를 이용한 커스터마이징 작업이 가능합니다.
+
+### Content 속성 알아보기​
+
+![](../../.gitbook/assets/cardinality.png)
 
 {% code title="MainView.controller.js" %}
 ```javascript
