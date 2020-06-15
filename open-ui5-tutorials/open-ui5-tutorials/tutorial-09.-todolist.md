@@ -264,6 +264,56 @@ UI5에서 VBox나 Vertical Layout과 같이 Model의 데이터를 배열의 형�
 
 Filter 객체를 사용하면 IF문이나 CASE문과 같은 문법을 사용하지 않아도 조건문을 사용할 수 있습니다. 바로, Filter 객체와 Filter 객체의 조건을 담는 FilterOperator를 사용하면 가능합니다. 
 
+{% code title="MainView.view.xml" %}
+```markup
+ <l:VerticalLayout content="{ path : 'todoList>/' }" id = "todo">
+	<f:Card
+	class="sapUiSmallMargin"
+	width="300px"
+	>
+		<f:header>
+			<card:Header
+				title="{todoList>title}"
+				subtitle="{todoList>name}"/>
+		</f:header>
+		<f:content>
+			<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+				<VBox>
+					<Text text="{todoList>description}"/>
+				</VBox>
+				<FlexBox
+					alignItems="Start"
+					justifyContent="Center">
+					<items>
+						<Button type="Accept"
+						icon="sap-icon://accept" 
+						press="onAccept" class="sapUiSmallMarginEnd" />
+						<Button type="Reject"
+						icon="sap-icon://delete"
+						press="onDelete" class="sapUiSmallMarginEnd" />
+					</items>
+				</FlexBox>
+			</VBox>
+		</f:content>
+	</f:Card>
+</l:VerticalLayout>
+```
+{% endcode %}
+
+{% code title="MainView.controller.js" %}
+```javascript
+  var oFilter = new sap.ui.model.Filter({
+    filters: [
+      new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.EQ, 'todo'),
+    ],
+    and: false
+  });
+
+  var oBinding =  this.getView().byId("todo").getBinding("content");
+  oBinding.filter(oFilter, sap.ui.model.FilterType.Application);
+```
+{% endcode %}
+
 #### Content 속성에 필터를 추가​
 
 Content 속성은 Model의 배열 정보와 바인드 됩니다. 이처럼 바인딩된 배열 정보는 한줄씩 렌더링이 되어 보여집니다. 앞선 [Tutorial 06. UI5 Model](tutorial-06.-ui5-model.md) 편을 보시면,  path 경로를 활용한 OData Model 바인딩 방법을 보실수 있습니다. path 경로로 OData Model을 바인드 한 후,  Filters 설정을 추가하면 Filter 객체를 선언하지 않아도 필터 기능을 사용할 수 있습니다.
