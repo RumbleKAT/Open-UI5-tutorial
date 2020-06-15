@@ -258,13 +258,22 @@ todoList 특성상 완료된 일은 다음 단계로 보여지고, 삭제할 일
 
 ### Filter 스마트하게 사용하기
 
-
-
 UI5에서 VBox나 Vertical Layout과 같이 Model의 데이터를 배열의 형태로 보여주는 태그에선 content 속성값에 매핑할 model의 배열 정보를 입력합니다. 하지만 여기에 필요한 값만 보여주는 Filter를 이용한 커스터마이징 작업이 가능합니다. ​
 
-### Filter 객체를 선언하여 필터 추가 
+#### Filter 객체를 선언하여 필터 추가 
 
-### Content 속성에 필터를 추가​
+Filter 객체를 사용하면 IF문이나 CASE문과 같은 문법을 사용하지 않아도 조건문을 사용할 수 있습니다. 바로, Filter 객체와 Filter 객체의 조건을 담는 FilterOperator를 사용하면 가능합니다. 
+
+#### Content 속성에 필터를 추가​
+
+Content 속성은 Model의 배열 정보와 바인드 됩니다. 이처럼 바인딩된 배열 정보는 한줄씩 렌더링이 되어 보여집니다. 앞선 [Tutorial 06. UI5 Model](tutorial-06.-ui5-model.md) 편을 보시면,  path 경로를 활용한 OData Model 바인딩 방법을 보실수 있습니다. path 경로로 OData Model을 바인드 한 후,  Filters 설정을 추가하면 Filter 객체를 선언하지 않아도 필터 기능을 사용할 수 있습니다.
+
+아래 예시는 type이 todo 인 값이 있다면 verticalLayout에 값을 매핑한다라는 의미입니다. 여기에 filter 조건을 추가하고 싶으시다면, 아래 조건과 같이  선언을 해주시면 됩니다.`{path : '대상값' , operator : 'FilterOperator의 operator 값', value1 : '비교대상값' }` 
+
+```markup
+	<l:VerticalLayout content="{ path : 'todoList>/', 
+		filters : [  { path : 'type', operator : 'EQ', value1 : 'todo' } ] }" >
+```
 
 ![](../../.gitbook/assets/cardinality.png)
 
