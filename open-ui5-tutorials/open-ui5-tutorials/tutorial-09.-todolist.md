@@ -24,6 +24,14 @@ description: Local Storage를 활용한 TodoList 만들기
 
 ![](../../.gitbook/assets/image%20%2823%29.png)
 
+### Mobile 결과 예시
+
+UI5를 사용하면 장점 중 하나가 반응형 웹으로 태블릿이나 모바일의 해상도에 맞춰서 자동으로 화면을 그려주는 것이 있습니다. 
+
+![](../../.gitbook/assets/image%20%2839%29.png)
+
+![](../../.gitbook/assets/image%20%2838%29.png)
+
 ## LocalStorage 활용
 
 UI5은 자체적으로 jQuery를 포함하고 있습니다. UI5에서 localStorage를 사용하기 위해선,  아래의 선언문으로 localStorage 객체를 정의할수 있습니다. 그리고 TodoList는 데이터를 읽고, 쓰고, 수정하고, 지우는 기능을 가지고 있습니다. \(Create, Read, Update, Delete\) 반면, localStorage는 데이터를 불러오고\(GET\), 정의하는\(SET\)기능을 제공합니다. CRUD 기능을 제공하기 위해 생성과 수정 기능은 localStorage의 SET 함수를 이용하였고, 삭제 기능은 JS filter 함수를 이용하여 특정 element를 제거한 객체를 저장하는 방식으로 구현을 진행했습니다.
