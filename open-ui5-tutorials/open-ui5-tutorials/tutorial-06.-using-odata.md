@@ -976,7 +976,9 @@ Odata Entityset은 키값을 가지고 있습니다. 저희는 이 키값을 통
 }
 ```
 
-## 번외편 - spring boot를 사용한 odata 개
+## 번외편 - spring boot를 사용한 odata 개발
+
+odata는 MS나 SAP 등 여러 글로벌 회사에서  사용하는 포맷입니다. 그리하여 ABAP이 아닌 다른 플랫폼에서도 Odata를 만들어 적용할 수 있습니다.
 
 
 
