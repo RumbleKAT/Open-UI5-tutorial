@@ -57,3 +57,7 @@ sId만 작성을 하면, 화면 상에는 아무것도 표시 되는 것이 없�
 
 ![Label tag example](../../.gitbook/assets/image%20%284%29.png)
 
+## Grid 
+
+ui5 에서 Grid를 활용한 element 배치를 배워봅니다.
+
