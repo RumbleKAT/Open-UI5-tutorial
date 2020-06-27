@@ -1214,7 +1214,7 @@ S
 								value1: 'UK'
 							}]
 						}">
-<items>
+</List>
 ```
 
 ```markup
