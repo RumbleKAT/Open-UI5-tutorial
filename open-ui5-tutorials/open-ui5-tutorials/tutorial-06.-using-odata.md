@@ -1185,10 +1185,74 @@ cors_proxy.createServer({
 		}
 	}
 }
+S
+```
+
+### Step 03. UI5에서 OdataModel 활용하기
+
+앞서 준비 절차를 통해 UI5에서 Odata를 제공하는 백엔드 서버간의 연결은 성공했습니다. 이제 본격적으로 view에서 Odata Model을 이용한 간단한 리스트 뷰 만들기를 해보겠습니다. 
+
+앞에 설정에서 sampleOdata라는 Model을 만들었습니다. Odata의 특징은 여러가지 EntitySet으로 구성되어 있다는 것입니다. 그리고 기본적으로 metadata.xml 형식을 제공하여, 이 API를 사용하는 개발자에게 이 서비스는 어떠 어떠한 데이터로 구성되어 있고, 어떤 키값을 URL에 전달하면 해당 키값에 해당하는 ROW의 값을 리턴 받을 수 있다는 것을 암시해줍니다. 
+
+ 이번 예시에서는 Customer entityset를 활용하여, UK 출신인 고객중에 알파벳 역순으로 조회되는 리스트뷰를 만들 것입니다. EntitySet을 접근하는 방법은 가장 root 경로에서 어떤 EntitySet이 있는지 파악하고, 슬래시 + EntitySet을 활용해서 접근할 수 있습니다. 
+
+#### XML View를 활용한 OdataModel 활용
+
+```markup
+<List headerText="Customers"
+						width="auto"
+						items="{
+							path : 'sampleOdata>/Customers',
+							sorter : {
+								path : 'ContactName',
+								descending: true
+							},
+							filters: [
+							{
+								path: 'Country',
+								operator: 'EQ',
+								value1: 'UK'
+							}]
+						}">
+<items>
+```
+
+```markup
+ <mvc:View controllerName="com.myorg.ui5Odata.controller.MainView"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<App id="idAppControl">
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<List headerText="Customers"
+						width="auto"
+						items="{
+							path : 'sampleOdata>/Customers',
+							sorter : {
+								path : 'ContactName',
+								descending: true
+							},
+							filters: [
+							{
+								path: 'Country',
+								operator: 'EQ',
+								value1: 'UK'
+							}]
+						}">
+						<items>
+						<StandardListItem
+							title="{sampleOdata>ContactName}" />
+						</items>
+					</List>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View> 
 
 ```
 
-
-
-
+![](../../.gitbook/assets/2020-06-27-3.39.29.png)
 
