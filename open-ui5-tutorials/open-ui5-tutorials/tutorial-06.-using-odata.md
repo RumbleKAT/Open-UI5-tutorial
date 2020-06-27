@@ -978,5 +978,217 @@ Odata Entityset은 키값을 가지고 있습니다. 저희는 이 키값을 통
 
 ## UI5에서 Odata 사용하기 
 
-UI5는 물론 fetch나 xmlHttpRequest와 같은 AJAX 함수를 이용하여 데이터를 주고받을 수 있지만, 기본적으로 OdataModel을 활용하여 CRUD 기능을 수행합니다.
+UI5는 물론 fetch나 xmlHttpRequest와 같은 AJAX 함수를 이용하여 데이터를 주고받을 수 있지만, 기본적으로 OdataModel을 활용하여 CRUD 기능을 수행합니다. 사실 이 부분은 Tutorial 06.에서 AJAX를 활용해서 데이터를 주고 받는 과정과 비슷하지만, manifest에서 remote 경로를 설정하여, 쉽게 CRUD 기능을 사용할 수 있는 편리함이 있습니다. \(물론 백엔드 서버가 Odata를 제공하는 경우에만 한정된 이야기입니다. \* 특히 SAP을 들 수 있습니다.\)
+
+이번 글은 [링크](https://velog.io/@opensapkr/Step-26-Optional-Remote-OData-Service-djjxptbktj)를 참고하여 작성되었습니다. \(추후 문제가 있을시, 수정 가능합니다.\)
+
+아까 언급한 Odata NorthWind를 사용하여 List로 보여주는 과정을 튜토리얼로 진행하겠습니다. JS는 기본적으로 CORS 원칙을 따르기 때문에, 다른 서버에서 CORS 접근을 허용하지 않는다면 데이터를 접근할 수 없습니다. 이를 해결하기 위해 cors-anywhere라는 프록시 서버를 실행하여 localhost:8081포트에 Odata경로를 우회하여 데이터를 보여주도록 하겠습니다.
+
+### Step 01. 프록시 서버 설정
+
+우선, 프록시 서버를 설정해보겠습니다. 앞서 언급했듯이, cors-anywhere라는 프록시 서버 라이브러리를 사용할 것이기 때문에, devDependencies에 아래와 같이 적어줍니다.
+
+```javascript
+"cors-anywhere": "^0.4.1"
+```
+
+다음으로, Package.json이 있는 위치에 프록시 서버 코드를 작성합니다. 
+
+{% code title="proxy.js" %}
+```javascript
+var cors_proxy = require('cors-anywhere');
+
+var host = '0.0.0.0';
+var port = 8081;
+
+cors_proxy.createServer({
+    originWhitelist :[], //모든 origin을 허락한다.
+    requireHeader : ['origin','x-requested-with'],
+    removeHeader : ['cookie','cookie2']
+}).listen(port, host, function(){
+    console.log('Running CORS Anywhere on ' + host + ":" + port);
+});
+```
+{% endcode %}
+
+프록시 서버는 node proxy.js 명령어를 이용하여 실행할 수 있습니다.
+
+```javascript
+{
+        "name": "ui5Odata",
+        "version": "0.0.1",
+        "engines": {
+                "node": "12.x.x"
+        },
+        "scripts": {
+                "start": "ui5 serve -o index.html",
+                "serve": "ui5 serve",
+                "test": "npm run lint && npm run karma",
+                "karma-ci": "karma start karma-ci.conf.js",
+                "karma": "rimraf coverage && npm run karma-ci",
+                "lint": "eslint webapp",
+                "proxy": "node proxy.js",
+                "build:ui": "ui5 build --a "
+        },
+        "dependencies": {
+                "@openui5/sap.ui.core": "^1.73.1",
+                "@openui5/sap.ui.layout": "^1.73.1",
+                "@openui5/themelib_sap_belize": "^1.73.1",
+                "@openui5/sap.m": "^1.73.1",
+                "shx": "^0.3.2"
+        },
+        "devDependencies": {
+                "@ui5/cli": "^1.14.0",
+                "eslint": "^6.7.2",
+                "karma": "^4.4.1",
+                "karma-chrome-launcher": "^3.1.0",
+                "karma-coverage": "^2.0.1",
+                "cors-anywhere": "^0.4.1",
+                "karma-ui5": "^1.1.0"
+        }
+}
+
+```
+
+![&#xC815;&#xC0C1; &#xC218;&#xD589;&#xC2DC;, &#xC544;&#xB798;&#xC640; &#xAC19;&#xC740; &#xBA54;&#xC2DC;&#xC9C0;&#xAC00; &#xC5F4;&#xB9BD;&#xB2C8;&#xB2E4;.](../../.gitbook/assets/2020-06-27-2.09.34.png)
+
+### Step 02. Remote dataSource 설정
+
+이제 본격적으로 UI5 프로젝트와 프록시 서버를 연결시켜주어야 합니다. UI5는 기본적으로 manifest.json에 해당 서비스에서 필요로하는 dataSource를 정의 할 수 있습니다. 만약 SAP Cloud Platform을 이용하는 사용자라면, 간단한 UI 설정으로 dataSource를 추가할 수 있습니다. 우선, sap.app 괄호 안에서 dataSources를 선언하고, 해당 서비스에서 필요로 하는 Odata uri 경로를 추가합니다.
+
+아래와 같이 sample이라는 dataSources를 선언하면, UI5 프로젝트를 시작하면서, 자연스럽게 해당 경로와 연결을 UI5에서 시도합니다. 
+
+```javascript
+"dataSources" : {
+			"sample" : {
+				"uri": "http://localhost:8081/https://services.odata.org/V2/Northwind/Northwind.svc/",
+				"type": "OData",
+				"settings": {
+				"odataVersion": "2.0"
+				} 
+			}
+		}
+```
+
+그리고 이렇게 정의된 dataSources을 접근하기 위해선, dataSources 경로를 참조하는 Model을 선언하면 됩니다. \(아래 예시는 sampleOdata라는 Odata를 선언하여, 화면에서 접근 가능하도록 선언했습니다.\)
+
+```javascript
+"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.myorg.ui5Odata.i18n.i18n"
+				}
+			},
+			"sampleOdata": {
+				"dataSource": "sample"
+			}
+		}
+```
+
+```javascript
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "com.myorg.ui5Odata",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"dataSources" : {
+			"sample" : {
+				"uri": "http://localhost:8081/https://services.odata.org/V2/Northwind/Northwind.svc/",
+				"type": "OData",
+				"settings": {
+				"odataVersion": "2.0"
+				} 
+			}
+		}
+	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.myorg.ui5Odata.view.MainView",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.60.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.myorg.ui5Odata.i18n.i18n"
+				}
+			},
+			"sampleOdata": {
+				"dataSource": "sample"
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.myorg.ui5Odata.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"async": true
+			},
+			"routes": [{
+				"name": "RouteMainView",
+				"pattern": "RouteMainView",
+				"target": ["TargetMainView"]
+			}],
+			"targets": {
+				"TargetMainView": {
+					"viewType": "XML",
+					"viewLevel": 1,
+					"viewName": "MainView"
+				}
+			}
+		}
+	}
+}
+
+```
+
+
+
+
 
