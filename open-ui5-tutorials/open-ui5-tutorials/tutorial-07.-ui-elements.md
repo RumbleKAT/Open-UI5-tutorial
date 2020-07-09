@@ -59,7 +59,7 @@ sId만 작성을 하면, 화면 상에는 아무것도 표시 되는 것이 없�
 
 ## Grid 
 
-ui5 에서 Grid를 활용한 element 배치를 배워봅니다. ui5의 Grid는 화면을 12등분을 합니다. 이를 통해 사용가능한 화면크기에 따라 다양한 Grid control의 child element를 지정할 수 있습니다. Grid를 사용하면, 데스크탑이나, 태블릿 및 모바일과 같은 여러 디바이스에 대해 유연한 레이아웃 및 줄 바꿈을 사용할 수 있습니다.
+ui5 에서 Grid를 활용한 element 배치를 배워봅니다. ui5의 Grid는 화면을 12등분을 합니다. 또한, root em을 나타내는 rem단위를 사용하는 측정 시스템을 사용합니다. 이를 통해 사용가능한 화면크기에 따라 다양한 Grid control의 child element를 지정할 수 있습니다. Grid를 사용하면, 데스크탑이나, 태블릿 및 모바일과 같은 여러 디바이스에 대해 유연한 레이아웃 및 줄 바꿈을 사용할 수 있습니다.
 
 Grid Control의 너비는 백분율 또는 픽셀 기반일 수 있으며, 미리 정의 된 다양한 값으로 설정할 수 있습니다. 특히 span을 이용하여 반응형 웹의 너비를 쉽게 구현할 수 있습니다.
 
@@ -74,7 +74,16 @@ defaultSpan 및 defaultIndent는 그리드의 특정 레이아웃을 정의할 �
 | L | 12 |
 | XL | 16 |
 
- 
+###  간단한 예시로 Grid layout 알아보기
+
+```markup
+<l:Grid defaultSpan="XL3 L4 M6 S12">
+  <Label text="A"/>
+  <Label text="B"/>
+  <Label text="C"/>
+  <Label text="D"/> 
+</l:Grid>
+```
 
 
 
