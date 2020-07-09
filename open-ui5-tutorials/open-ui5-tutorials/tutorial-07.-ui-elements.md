@@ -76,6 +76,8 @@ defaultSpan 및 defaultIndent는 그리드의 특정 레이아웃을 정의할 �
 
 ###  간단한 예시로 Grid layout 알아보기
 
+Grid layout은 ui element간 배치를 위해서 사용됩니다. 간단한 예시를 이용하여 4가지 라벨이 어떻게 배치가 되는지 알아보겠습니다.
+
 ```markup
 <l:Grid defaultSpan="XL3 L4 M6 S12">
   <Label text="A"/>
@@ -84,6 +86,8 @@ defaultSpan 및 defaultIndent는 그리드의 특정 레이아웃을 정의할 �
   <Label text="D"/> 
 </l:Grid>
 ```
+
+화면을 균등하게 나누어 element를 배치합니다. 위의 예시를 렌더링한다면, XL사이즈 일때는 12화면을 3으로 나눈 4가지 화면으로 분할되는 것을 보실 수 있습니다.
 
 
 
